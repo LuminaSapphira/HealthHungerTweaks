@@ -1,5 +1,8 @@
 package net.cerulan.healthhungertweaks.capability;
 
+import java.util.Arrays;
+
+import net.cerulan.healthhungertweaks.HealthHungerTweaks;
 import net.cerulan.healthhungertweaks.ModInfo;
 import net.cerulan.healthhungertweaks.network.HealthHungerPacketHandler;
 import net.cerulan.healthhungertweaks.network.MessageSyncHealthBox;
@@ -14,8 +17,10 @@ import net.minecraftforge.common.capabilities.CapabilityInject;
 import net.minecraftforge.common.capabilities.CapabilityManager;
 import net.minecraftforge.common.capabilities.ICapabilitySerializable;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
-import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
+import net.minecraftforge.event.entity.EntityJoinWorldEvent;
+import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
 
 public class HealthBoxCapabilityHandler {
 	@CapabilityInject(IHealthBoxCapability.class)
@@ -62,6 +67,29 @@ public class HealthBoxCapabilityHandler {
 			EntityPlayerMP player = (EntityPlayerMP)event.player;
 			int[] health = player.getCapability(HEALTH_BOX, null).getHealthKits();
 			HealthHungerPacketHandler.INSTANCE.sendTo(new MessageSyncHealthBox(health), player);
+		}
+	}
+	
+	@SubscribeEvent
+	public void onPlayerClone(PlayerEvent.Clone event) {
+		if (event.isWasDeath()/* && !event.getEntityPlayer().worldObj.isRemote*/) {
+			IHealthBoxCapability cap = event.getOriginal().getCapability(HEALTH_BOX, null);
+			HealthHungerTweaks.Log.info(Arrays.toString(cap.getHealthKits()));
+			event.getEntityPlayer().getCapability(HEALTH_BOX, null).setHealthKits(cap.getHealthKits());
+			HealthHungerTweaks.Log.info(Arrays.toString(event.getEntityPlayer().getCapability(HEALTH_BOX, null).getHealthKits()));
+			int[] health = cap.getHealthKits();
+			HealthHungerTweaks.Log.info(Arrays.toString(health));
+			//
+			
+		}
+	}
+	
+	@SubscribeEvent
+	public void onEntityJoinWorld(EntityJoinWorldEvent event) {
+		if (event.getEntity() instanceof EntityPlayerMP && !event.getEntity().worldObj.isRemote) {
+			IHealthBoxCapability cap = event.getEntity().getCapability(HEALTH_BOX, null);
+			int[] health = cap.getHealthKits();
+			HealthHungerPacketHandler.INSTANCE.sendTo(new MessageSyncHealthBox(health), (EntityPlayerMP)event.getEntity());
 		}
 	}
 	

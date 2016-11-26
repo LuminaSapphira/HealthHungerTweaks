@@ -7,11 +7,11 @@ import net.minecraft.item.ItemStack;
 
 public class ContainerHealthBox extends Container {
 	
-	private EntityPlayer player;
+	//private EntityPlayer player;
 	//public HealthKitInventory inventory;
 	
 	public ContainerHealthBox(EntityPlayer player) {
-		this.player = player;
+		//this.player = player;
 		
 		// Input, Slot 0
 		this.addSlotToContainer(new SlotHealthKit(player, 0, 80, 25));

@@ -1,8 +1,12 @@
 package net.cerulan.healthhungertweaks.network;
 
+import java.util.Arrays;
+
 import io.netty.buffer.ByteBuf;
 import net.cerulan.healthhungertweaks.HealthHungerTweaks;
 import net.cerulan.healthhungertweaks.capability.HealthBoxCapabilityHandler;
+import net.minecraft.entity.player.EntityPlayer;
+import net.cerulan.healthhungertweaks.capability.IHealthBoxCapability;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
@@ -14,7 +18,11 @@ public class MessageSyncHealthBox implements IMessage{
 		@Override
 		public IMessage onMessage(MessageSyncHealthBox message, MessageContext ctx) {
 			HealthHungerTweaks.sidedProxy.getThreadFromContext(ctx).addScheduledTask(() -> {
-				HealthHungerTweaks.sidedProxy.getPlayerEntity(ctx).getCapability(HealthBoxCapabilityHandler.HEALTH_BOX, null).setHealthKits(message.health);
+				EntityPlayer pl = HealthHungerTweaks.sidedProxy.getPlayerEntity(ctx);
+				IHealthBoxCapability cap = pl.getCapability(HealthBoxCapabilityHandler.HEALTH_BOX, null);
+				HealthHungerTweaks.Log.info("got sync. new: " + Arrays.toString(message.health) + "old: " + Arrays.toString(cap.getHealthKits()));
+				cap.setHealthKits(message.health);
+				
 			});
 			return null;
 		}

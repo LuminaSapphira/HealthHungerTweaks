@@ -7,7 +7,6 @@ import net.cerulan.healthhungertweaks.capability.IHealthBoxCapability;
 import net.cerulan.healthhungertweaks.item.ModItems;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;

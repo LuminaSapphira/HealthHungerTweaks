@@ -4,7 +4,7 @@ potion.mending=Mending
 container.healthbox=Health Box
 container.healthbox.tooltip1=${item}
 container.healthbox.tooltip2=${amount} in stock.
-container.healthbox.tooltip3=Click to remove ${removeamt}.
+container.healthbox.tooltip3=Left Click to remove ${removeamt}. Right Click to use.
 container.healthbox.tooltip4=Hold SHIFT for 64, CONTROL for 10.
 
 key.usehealthkit=Use Health Kit
@@ -14,3 +14,5 @@ key.category.healthhungertweaks=Health and Hunger Tweaks
 item.healthKit.0.name=Primitive Health Kit
 item.healthKit.1.name=Standard Health Kit
 item.healthKit.2.name=Advanced Health Kit
+
+healthkit.useHealthKit=${item} used.

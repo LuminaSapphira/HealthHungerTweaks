@@ -1,6 +1,5 @@
 package net.cerulan.healthhungertweaks.capability;
 
-import net.cerulan.healthhungertweaks.HealthHungerTweaks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.MathHelper;
 
