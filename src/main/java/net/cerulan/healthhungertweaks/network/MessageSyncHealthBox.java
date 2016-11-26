@@ -41,6 +41,8 @@ public class MessageSyncHealthBox implements IMessage{
 	public void toBytes(ByteBuf buf) {
 		for (int i = 0; i < 3; i++) {
 			buf.writeInt(health[i]);
+			
+			// TODO Low priority: dynamic # of kits
 		}
 	}
 

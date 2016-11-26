@@ -13,7 +13,7 @@ public class HealthBoxStorage implements IStorage<IHealthBoxCapability> {
 	public NBTBase writeNBT(Capability<IHealthBoxCapability> capability, IHealthBoxCapability instance,
 			EnumFacing side) {
 		NBTTagIntArray ia = new NBTTagIntArray(instance.getHealthKits());
-		HealthHungerTweaks.Log.info(ia);
+		//HealthHungerTweaks.Log.info(ia);
 		return ia;
 	}
 
@@ -23,7 +23,7 @@ public class HealthBoxStorage implements IStorage<IHealthBoxCapability> {
 		
 		try {
 			NBTTagIntArray ia = ((NBTTagIntArray)nbt);
-			HealthHungerTweaks.Log.info(ia);
+			//HealthHungerTweaks.Log.info(ia);
 			System.arraycopy(ia.getIntArray(), 0, instance.getHealthKits(), 0, 3);
 		}
 		catch (Exception ex) {
