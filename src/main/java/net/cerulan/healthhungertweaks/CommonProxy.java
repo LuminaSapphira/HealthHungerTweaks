@@ -35,7 +35,6 @@ public class CommonProxy {
 	}
 	
 	public void init() {
-		HealthHungerTweaks.Log.info("hht prox Init");
 		handler =  new HealthHungerHandler();
 		MinecraftForge.EVENT_BUS.register(handler);
 		packetHandler = new HealthHungerPacketHandler();

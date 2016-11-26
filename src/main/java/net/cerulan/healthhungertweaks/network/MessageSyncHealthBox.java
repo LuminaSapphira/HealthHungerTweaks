@@ -20,7 +20,6 @@ public class MessageSyncHealthBox implements IMessage{
 			HealthHungerTweaks.sidedProxy.getThreadFromContext(ctx).addScheduledTask(() -> {
 				EntityPlayer pl = HealthHungerTweaks.sidedProxy.getPlayerEntity(ctx);
 				IHealthBoxCapability cap = pl.getCapability(HealthBoxCapabilityHandler.HEALTH_BOX, null);
-				HealthHungerTweaks.Log.info("got sync. new: " + Arrays.toString(message.health) + "old: " + Arrays.toString(cap.getHealthKits()));
 				cap.setHealthKits(message.health);
 				
 			});

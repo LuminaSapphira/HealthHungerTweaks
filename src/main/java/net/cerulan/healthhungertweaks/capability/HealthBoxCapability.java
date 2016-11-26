@@ -34,10 +34,8 @@ public class HealthBoxCapability implements IHealthBoxCapability {
 
 	@Override
 	public void setStackInSlot(int slot, ItemStack stack) {
-		//HealthHungerTweaks.Log.info(stack);
 		if (stack != null) {
 			getHealthKits()[MathHelper.clamp_int(stack.getItemDamage(), 0, 2)] += stack.stackSize;
-		//	HealthHungerTweaks.Log.info("item inserted. " + getHealthKits()[0]);
 		// 	TODO more kits
 		}
 	}

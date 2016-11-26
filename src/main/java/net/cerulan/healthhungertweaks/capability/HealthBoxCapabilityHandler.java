@@ -72,14 +72,10 @@ public class HealthBoxCapabilityHandler {
 	
 	@SubscribeEvent
 	public void onPlayerClone(PlayerEvent.Clone event) {
-		if (event.isWasDeath()/* && !event.getEntityPlayer().worldObj.isRemote*/) {
+		if (event.isWasDeath()) {
 			IHealthBoxCapability cap = event.getOriginal().getCapability(HEALTH_BOX, null);
-			HealthHungerTweaks.Log.info(Arrays.toString(cap.getHealthKits()));
 			event.getEntityPlayer().getCapability(HEALTH_BOX, null).setHealthKits(cap.getHealthKits());
-			HealthHungerTweaks.Log.info(Arrays.toString(event.getEntityPlayer().getCapability(HEALTH_BOX, null).getHealthKits()));
 			int[] health = cap.getHealthKits();
-			HealthHungerTweaks.Log.info(Arrays.toString(health));
-			//
 			
 		}
 	}
