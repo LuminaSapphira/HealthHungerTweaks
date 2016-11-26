@@ -2,6 +2,7 @@ package net.cerulan.healthhungertweaks.capability;
 
 import net.cerulan.healthhungertweaks.HealthHungerTweaks;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.math.MathHelper;
 
 public class HealthBoxCapability implements IHealthBoxCapability {
 
@@ -34,11 +35,11 @@ public class HealthBoxCapability implements IHealthBoxCapability {
 
 	@Override
 	public void setStackInSlot(int slot, ItemStack stack) {
-		HealthHungerTweaks.Log.info(stack);
+		//HealthHungerTweaks.Log.info(stack);
 		if (stack != null) {
-		getHealthKits()[0] += stack.stackSize;
-		//HealthHungerTweaks.Log.info("item inserted. " + getHealthKits()[0]);
-		// TODO more kits
+			getHealthKits()[MathHelper.clamp_int(stack.getItemDamage(), 0, 2)] += stack.stackSize;
+		//	HealthHungerTweaks.Log.info("item inserted. " + getHealthKits()[0]);
+		// 	TODO more kits
 		}
 	}
 
