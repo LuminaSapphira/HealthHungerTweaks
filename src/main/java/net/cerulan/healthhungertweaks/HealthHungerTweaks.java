@@ -30,7 +30,7 @@ public class HealthHungerTweaks
 	@EventHandler
     public void preInit(FMLPreInitializationEvent event)
     {
-		HealthHungerTweaks.Log.info("PreInit");
+		HealthHungerTweaks.Log.info("PreInitialization");
 		configHandler = new ConfigHandler(new Configuration(event.getSuggestedConfigurationFile()));
 		configHandler.load();
         sidedProxy.preInit();
@@ -40,7 +40,7 @@ public class HealthHungerTweaks
     @EventHandler
     public void init(FMLInitializationEvent event)
     {
-    	HealthHungerTweaks.Log.info("hht Init");
+    	HealthHungerTweaks.Log.info("Initialization");
         sidedProxy.init();
     }
     

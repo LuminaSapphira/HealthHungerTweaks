@@ -13,12 +13,10 @@ import squeek.applecore.api.hunger.HealthRegenEvent;
 public class HealthHungerHandler {
 	
 	public HealthHungerHandler() {
-		HealthHungerTweaks.Log.info("new inst handler");
 	}
 
 	@SubscribeEvent
 	public void allowNormalRegen(HealthRegenEvent.AllowRegen event) {
-		//HealthHungerTweaks.Log.info("asd");
 		//event.setResult(Result.DENY);
 		allowRegen(event);
 	}
@@ -39,7 +37,6 @@ public class HealthHungerHandler {
 	
 	@SubscribeEvent
 	public void allowExhaustion(ExhaustionEvent.AllowExhaustion event) {
-		//HealthHungerTweaks.Log.info("checking exhaustion");
 		if (event.player.isPotionActive(HealthHungerTweaks.sidedProxy.potionSatiated)) {
 			event.setResult(Result.DENY);
 		}

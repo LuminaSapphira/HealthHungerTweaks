@@ -9,7 +9,6 @@ public class MessageOpenHealthBoxHandler implements IMessageHandler<MessageOpenH
 
 	@Override
 	public IMessage onMessage(MessageOpenHealthBox message, MessageContext ctx) {
-		HealthHungerTweaks.Log.info("Got message to open gui.");
 		ctx.getServerHandler().playerEntity.openGui(HealthHungerTweaks.instance, 0, ctx.getServerHandler().playerEntity.worldObj, 0, 0, 0);
 		return null;
 	}
