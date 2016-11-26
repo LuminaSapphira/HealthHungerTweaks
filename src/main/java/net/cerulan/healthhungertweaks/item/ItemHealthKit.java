@@ -13,27 +13,7 @@ public class ItemHealthKit extends ItemBase {
 
 	public ItemHealthKit(String name) {
 		super(name);
-		this.setHasSubtypes(true);
-	}
-	
-	@Override
-	public String getUnlocalizedName(ItemStack stack) {
-		return super.getUnlocalizedName(stack) + "." + stack.getMetadata();
-	}
-	
-	@Override
-	public void registerItemModel() {
-		HealthHungerTweaks.sidedProxy.registerItemRenderer(this, 0, name);
-		HealthHungerTweaks.sidedProxy.registerItemRenderer(this, 1, name);
-		HealthHungerTweaks.sidedProxy.registerItemRenderer(this, 2, name);
-	}
-
-	@SideOnly(Side.CLIENT)
-	@Override
-	public void getSubItems(Item itemIn, CreativeTabs tab, List<ItemStack> subItems) {
-		for (int i = 0; i < 3; i++) {
-			subItems.add(new ItemStack(itemIn, 1, i));
-		}
+		this.setSubtypeAmount(3);
 	}
 
 }
