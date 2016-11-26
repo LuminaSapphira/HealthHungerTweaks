@@ -37,7 +37,7 @@ public class HealthBoxCapability implements IHealthBoxCapability {
 		HealthHungerTweaks.Log.info(stack);
 		if (stack != null) {
 		getHealthKits()[0] += stack.stackSize;
-		HealthHungerTweaks.Log.info("item inserted. " + getHealthKits()[0]);
+		//HealthHungerTweaks.Log.info("item inserted. " + getHealthKits()[0]);
 		// TODO more kits
 		}
 	}
