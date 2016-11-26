@@ -1,8 +1,8 @@
 package net.cerulan.healthhungertweaks.gui;
 
 import net.cerulan.healthhungertweaks.capability.HealthBoxCapabilityHandler;
+import net.cerulan.healthhungertweaks.item.ModItems;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.items.SlotItemHandler;
 
@@ -17,7 +17,7 @@ public class SlotHealthKit extends SlotItemHandler {
 	
 	@Override
 	public boolean isItemValid(ItemStack valid) {
-		return valid.getItem() == Items.DIAMOND;
+		return valid.getItem() == ModItems.itemHealthKit;
 	}
 
 }

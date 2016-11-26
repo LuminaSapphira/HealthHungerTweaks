@@ -105,7 +105,7 @@ public class GuiHealthBox extends GuiContainer {
 		int kit = getKitAtPoint(mx, my);
 		if (kit != -1) { 
 			ITextComponent tool1 = new TextComponentString(new TextComponentTranslation("container.healthbox.tooltip1").getFormattedText()
-					.replace("${item}", new TextComponentTranslation(String.format("item.healthkit.%1$d.name", kit)).getFormattedText()));
+					.replace("${item}", new TextComponentTranslation(String.format("item.healthKit.%1$d.name", kit)).getFormattedText()));
 			tool1.getStyle().setColor(TextFormatting.AQUA);
 			
 			ITextComponent tool2 = new TextComponentString(new TextComponentTranslation("container.healthbox.tooltip2").getFormattedText()
@@ -165,8 +165,10 @@ public class GuiHealthBox extends GuiContainer {
 			int kit = getKitAtPoint(mx, my);
 			if (kit != -1) {
 				int rmv = getRemoveAmountForKit(kits[kit]);
-				HealthHungerTweaks.Log.info(String.format("Withdrawing %1$d from kit %2$d", rmv, kit));
-				HealthHungerPacketHandler.INSTANCE.sendToServer(new MessageWithdrawKits(kit, rmv));
+				if (rmv > 0) {
+					HealthHungerTweaks.Log.info(String.format("Requesting to withdraw %1$d from kit %2$d", rmv, kit));
+					HealthHungerPacketHandler.INSTANCE.sendToServer(new MessageWithdrawKits(kit, rmv));
+				}
 			}
 		}
 	}

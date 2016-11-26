@@ -4,6 +4,7 @@ import io.netty.buffer.ByteBuf;
 import net.cerulan.healthhungertweaks.HealthHungerTweaks;
 import net.cerulan.healthhungertweaks.capability.HealthBoxCapabilityHandler;
 import net.cerulan.healthhungertweaks.capability.IHealthBoxCapability;
+import net.cerulan.healthhungertweaks.item.ModItems;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
@@ -21,18 +22,20 @@ public class MessageWithdrawKits implements IMessage {
 		public IMessage onMessage(MessageWithdrawKits message, MessageContext ctx) {
 			HealthHungerTweaks.sidedProxy.getThreadFromContext(ctx).addScheduledTask(() -> {
 				IHealthBoxCapability healthbox = HealthHungerTweaks.sidedProxy.getPlayerEntity(ctx).getCapability(HealthBoxCapabilityHandler.HEALTH_BOX, null);
-				int[] kits = healthbox.getHealthKits();
-				
-				int removeAmount = MathHelper.clamp_int(message.amount, 0, Math.min(kits[message.kit], 64));
-				int before = kits[message.kit];				
-				kits[message.kit] = kits[message.kit] - removeAmount;
-				healthbox.setHealthKits(kits);
-				
-				EntityPlayer ply = ctx.getServerHandler().playerEntity;
-				// TODO change dropped item
-				ply.worldObj.spawnEntityInWorld(new EntityItem(ply.worldObj, ply.posX, ply.posY, ply.posZ, new ItemStack(Items.DIAMOND, removeAmount)));
-				
-				HealthHungerPacketHandler.INSTANCE.sendTo(new MessageSyncHealthBox(healthbox.getHealthKits()), ctx.getServerHandler().playerEntity);
+				if (message.amount > 0) {
+					int[] kits = healthbox.getHealthKits();
+					int kitindex = MathHelper.clamp_int(message.kit, 0, 2);
+					int removeAmount = MathHelper.clamp_int(message.amount, 0, Math.min(kits[kitindex], 64));
+					kits[kitindex] = kits[kitindex] - removeAmount;
+					healthbox.setHealthKits(kits);
+
+					EntityPlayer ply = ctx.getServerHandler().playerEntity;
+					ply.worldObj.spawnEntityInWorld(new EntityItem(ply.worldObj, ply.posX, ply.posY, ply.posZ,
+							new ItemStack(ModItems.itemHealthKit, removeAmount, kitindex)));
+
+					HealthHungerPacketHandler.INSTANCE.sendTo(new MessageSyncHealthBox(healthbox.getHealthKits()),
+							ctx.getServerHandler().playerEntity);
+				}
 			});
 			return null;
 		}
