@@ -3,11 +3,8 @@ package net.cerulan.healthhungertweaks;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import net.cerulan.healthhungertweaks.capability.IHealthBoxCapability;
 import net.cerulan.healthhungertweaks.handler.ConfigHandler;
 import net.cerulan.healthhungertweaks.item.ModItems;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.CapabilityInject;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;

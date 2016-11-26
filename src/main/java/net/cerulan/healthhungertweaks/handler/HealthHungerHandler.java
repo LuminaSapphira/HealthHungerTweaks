@@ -30,8 +30,9 @@ public class HealthHungerHandler {
 	}
 	
 	private void allowRegen(HealthRegenEvent event) {
-		event.setResult(Result.DENY);
-		// TODO regen Config
+		if (HealthHungerTweaks.instance.configHandler.shouldDisableRegularRegen()) {
+			event.setResult(Result.DENY);
+		}
 	}
 	
 	// TODO Peaceful config
@@ -45,23 +46,19 @@ public class HealthHungerHandler {
 		else {
 			event.setResult(Result.DEFAULT);
 		}
-		// TODO satiated Config
 	}
 	
 	@SubscribeEvent
 	public void getMaxExhaustion(ExhaustionEvent.GetMaxExhaustion event) {
-		//HealthHungerTweaks.Log.info("new max exhaustion");
-		event.maxExhaustionLevel *= 2f;
-		// TODO exhaustion Config
+		event.maxExhaustionLevel *= HealthHungerTweaks.instance.configHandler.getExhaustionModifier();
 	}
 	
 	@SubscribeEvent
     public void onFoodEaten(FoodEvent.FoodEaten event) {
-		//HealthHungerTweaks.Log.info("here213");
-		//if (!event.player.worldObj.isRemote) {
-			int ticks = event.foodValues.hunger * 600;
+		if (HealthHungerTweaks.instance.configHandler.shouldSate()) {
+			int ticks = event.foodValues.hunger * HealthHungerTweaks.instance.configHandler.getSatiatedDuration();
 			event.player.addPotionEffect(new PotionEffect(HealthHungerTweaks.sidedProxy.potionSatiated, ticks, 0, false, true));
-		//}
+		}
 	}
 	
 	@SubscribeEvent

@@ -7,6 +7,7 @@ import net.cerulan.healthhungertweaks.HealthHungerTweaks;
 import net.cerulan.healthhungertweaks.ModInfo;
 import net.cerulan.healthhungertweaks.capability.HealthBoxCapabilityHandler;
 import net.cerulan.healthhungertweaks.network.HealthHungerPacketHandler;
+import net.cerulan.healthhungertweaks.network.MessageUseHealthKit;
 import net.cerulan.healthhungertweaks.network.MessageWithdrawKits;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
@@ -169,6 +170,14 @@ public class GuiHealthBox extends GuiContainer {
 					HealthHungerTweaks.Log.info(String.format("Requesting to withdraw %1$d from kit %2$d", rmv, kit));
 					HealthHungerPacketHandler.INSTANCE.sendToServer(new MessageWithdrawKits(kit, rmv));
 				}
+			}
+		}
+		
+		if (mouseButton == 1) {
+			int kit = getKitAtPoint(mx, my);
+			if (kit != -1) {
+				HealthHungerTweaks.Log.info(String.format("Requesting to use kit %1$d", kit));
+				HealthHungerPacketHandler.INSTANCE.sendToServer(new MessageUseHealthKit(kit));
 			}
 		}
 	}

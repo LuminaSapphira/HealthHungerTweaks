@@ -13,13 +13,25 @@ public class ConfigHandler {
 		this.config = config;
 	}
 	
+	private boolean doSatiation;
+	private int satiatedDuration;
+	private double exhaustionModifier;
 	private int maxUnrecoverableHealth;
 	private boolean useDmgWhitelist;
 	private List<String> damageWhitelist;
 	private List<String> damageBlacklist;
 	
+	private boolean disableRegularRegen;
+	
 	
 	public void load() {
+		doSatiation = config.get("satiated", "enableSatiated", true, "Toggles whether eating food gives a satiated effect that disabled food drain for the duration.").getBoolean();
+		satiatedDuration = config.get("satiated", "satiatedDuration", 600, "This value will be multipled to the food value of the food to get the duration (in ticks) of the satiated effect.").getInt();
+		
+		exhaustionModifier = config.get("exhaustion", "exhaustionModifier", 2.0, "An exhaustion modifier that will be multiplied to the default maximum exhausion. Higher values mean slower food drain.").getDouble();
+		
+		disableRegularRegen = config.get("mending", "disableRegularRegen", true, "Toggles whether regular regen (from food) should be disabled, and players must use health kits. Recommended if food is made easier.").getBoolean();
+		
 		maxUnrecoverableHealth = config.get("mending", "maxUnrecoverableHealth", 5, "The highest health from which the mending buff will not get applied. (If you drop below this health, you will lose the mending effect)").getInt();
 		useDmgWhitelist = config.get("mending", "useDamageWhitelist", true, "Sets whether to use a whitelist or a blacklist for applying the mending effect following damage from a damage source.").getBoolean();
 		String[] dmgWht = config.get("mending", "damageWhitelist", new String[] {"hotFloor", "inWall", "drown", "cactus", "fall", "flyIntoWall", "fallingBlock"},
@@ -47,5 +59,13 @@ public class ConfigHandler {
 	}
 	
 	public int getMaxUnrecoverableHealth() { return maxUnrecoverableHealth; }
+	
+	public double getExhaustionModifier() { return exhaustionModifier; }
+	
+	public boolean shouldSate() { return doSatiation; }
+	
+	public int getSatiatedDuration() { return satiatedDuration; }
+	
+	public boolean shouldDisableRegularRegen() { return disableRegularRegen; }
 	
 }

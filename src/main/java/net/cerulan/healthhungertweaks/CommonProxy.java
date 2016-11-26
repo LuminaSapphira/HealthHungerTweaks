@@ -3,8 +3,6 @@ package net.cerulan.healthhungertweaks;
 import net.cerulan.healthhungertweaks.capability.HealthBoxCapabilityHandler;
 import net.cerulan.healthhungertweaks.gui.GuiHandler;
 import net.cerulan.healthhungertweaks.handler.HealthHungerHandler;
-import net.cerulan.healthhungertweaks.item.ItemBase;
-import net.cerulan.healthhungertweaks.item.ModItems;
 import net.cerulan.healthhungertweaks.network.HealthHungerPacketHandler;
 import net.cerulan.healthhungertweaks.potion.PotionMending;
 import net.cerulan.healthhungertweaks.potion.PotionSatiated;

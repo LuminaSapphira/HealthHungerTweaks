@@ -1,6 +1,5 @@
 package net.cerulan.healthhungertweaks.capability;
 
-import net.cerulan.healthhungertweaks.HealthHungerTweaks;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagIntArray;
 import net.minecraft.util.EnumFacing;
