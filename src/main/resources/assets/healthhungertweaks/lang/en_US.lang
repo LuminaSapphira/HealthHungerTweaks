@@ -14,9 +14,10 @@ key.category.healthhungertweaks=Health and Hunger Tweaks
 item.healthKit.0.name=Primitive Health Kit
 item.healthKit.1.name=Standard Health Kit
 item.healthKit.2.name=Advanced Health Kit
-item.woodFiberBandage.0.name=Wood Fiber Bandage
-item.clothBandage.0.name=Cloth Bandage
-item.plantOintment.0.name=Plant Ointment
-item.plantOintment.1.name=Refined Plant Ointment
+item.bandage.0.name=Wood Fiber Bandage
+item.bandage.1.name=Cloth Bandage
+item.ointment.0.name=Plant Ointment
+item.ointment.1.name=Refined Plant Ointment
+item.medicalTools.0.name=Medical Tools
 
 healthkit.useHealthKit=${item} used.
