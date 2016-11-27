@@ -6,11 +6,15 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 public class ModItems {
 
 	public static ItemBase itemHealthKit;
-	public static ItemBase itemWoodFiberBandage;
+	public static ItemBase itemBandage;
+	public static ItemBase itemOintment;
+	public static ItemBase itemMedicalTools;
 	
 	public static void init() {
-		itemHealthKit = register(new ItemHealthKit("healthKit").setCreativeTab(HealthHungerTweaks.sidedProxy.creativeTab));
-		itemWoodFiberBandage = register(new ItemBase("woodFiberBandage").setCreativeTab(HealthHungerTweaks.sidedProxy.creativeTab));
+		itemHealthKit = register(new ItemHealthKit("healthKit").setCreativeTab(HealthHungerTweaks.sidedProxy.creativeTab).setSubtypeAmount(3));
+		itemBandage = register(new ItemBase("bandage").setCreativeTab(HealthHungerTweaks.sidedProxy.creativeTab).setSubtypeAmount(2));
+		itemOintment = register(new ItemBase("ointment").setCreativeTab(HealthHungerTweaks.sidedProxy.creativeTab).setSubtypeAmount(2));
+		itemMedicalTools = register(new ItemBase("medicalTools").setCreativeTab(HealthHungerTweaks.sidedProxy.creativeTab));
 	}
 
 	private static <T extends Item> T register(T item) {

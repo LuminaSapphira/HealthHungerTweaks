@@ -5,6 +5,7 @@ import org.apache.logging.log4j.Logger;
 
 import net.cerulan.healthhungertweaks.handler.ConfigHandler;
 import net.cerulan.healthhungertweaks.item.ModItems;
+import net.cerulan.healthhungertweaks.recipe.ModRecipes;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
@@ -42,6 +43,7 @@ public class HealthHungerTweaks
     {
     	HealthHungerTweaks.Log.info("Initialization");
         sidedProxy.init();
+        ModRecipes.init();
     }
     
     
