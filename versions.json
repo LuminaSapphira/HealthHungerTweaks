@@ -1,0 +1,9 @@
+{
+  "homepage": "https://minecraft.curseforge.com/projects/health-and-hunger-tweaks",
+  "1.10.2": {
+    "1.0.0-beta2": "Fixed a few minor issues"
+  },
+  "promos": {
+    "<1.10.2>-latest": "1.0.0-beta2"
+  }
+}
