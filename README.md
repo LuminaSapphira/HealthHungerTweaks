@@ -6,6 +6,8 @@ Modifies the way Minecraft manages food and the corresponding health regeneratio
  * Disables health regeneration from saturation and fullness (*come on, it had to be balanced*)
  * Provides a Health Kit system to compensate
 
+[Check out the longer documentation](https://github.com/CerulanLumina/HealthHungerTweaks/wiki/Changes-in-Detail)
+
 *Author's Note: This is my first Minecraft mod. I made attempts to follow conventions, but no promises.*
 
 **Most properties are configurable in the well-documented configuration file**
