@@ -1,12 +1,10 @@
 package net.cerulan.healthhungertweaks.network;
 
-import java.util.Arrays;
-
 import io.netty.buffer.ByteBuf;
 import net.cerulan.healthhungertweaks.HealthHungerTweaks;
 import net.cerulan.healthhungertweaks.capability.HealthBoxCapabilityHandler;
-import net.minecraft.entity.player.EntityPlayer;
 import net.cerulan.healthhungertweaks.capability.IHealthBoxCapability;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;

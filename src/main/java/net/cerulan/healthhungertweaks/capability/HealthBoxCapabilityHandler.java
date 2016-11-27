@@ -1,8 +1,5 @@
 package net.cerulan.healthhungertweaks.capability;
 
-import java.util.Arrays;
-
-import net.cerulan.healthhungertweaks.HealthHungerTweaks;
 import net.cerulan.healthhungertweaks.ModInfo;
 import net.cerulan.healthhungertweaks.network.HealthHungerPacketHandler;
 import net.cerulan.healthhungertweaks.network.MessageSyncHealthBox;
@@ -75,8 +72,6 @@ public class HealthBoxCapabilityHandler {
 		if (event.isWasDeath()) {
 			IHealthBoxCapability cap = event.getOriginal().getCapability(HEALTH_BOX, null);
 			event.getEntityPlayer().getCapability(HEALTH_BOX, null).setHealthKits(cap.getHealthKits());
-			int[] health = cap.getHealthKits();
-			
 		}
 	}
 	

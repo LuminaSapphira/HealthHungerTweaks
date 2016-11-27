@@ -21,3 +21,5 @@ item.ointment.1.name=Refined Plant Ointment
 item.medicalTools.0.name=Medical Tools
 
 healthkit.useHealthKit=${item} used.
+
+itemGroup.healthhungertweaks=Health and Hunger Tweaks
