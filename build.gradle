@@ -21,13 +21,13 @@ repositories {
 	
 }
 
-version = "1.0.0"
+version = "1.0.0-beta1"
 group= "net.cerulan.healthhungertweaks"
-archivesBaseName = "modid"
+archivesBaseName = "healthhungertweaks"
 
-sourceCompatibility = targetCompatibility = "1.6" // Need this here so eclipse task generates correctly.
+sourceCompatibility = targetCompatibility = "1.8" // Need this here so eclipse task generates correctly.
 compileJava {
-    sourceCompatibility = targetCompatibility = "1.6"
+    sourceCompatibility = targetCompatibility = "1.8"
 }
 
 minecraft {

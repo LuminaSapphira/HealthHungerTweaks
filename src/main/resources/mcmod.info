@@ -2,7 +2,7 @@
 {
   "modid": "healthhungertweaks",
   "name": "Health and Hunger Tweaks",
-  "description": "Modifies the way Minecraft manages food the corresponding health regeneration",
+  "description": "Modifies the way Minecraft manages food and the corresponding health regeneration",
   "version": "${version}",
   "mcversion": "${mcversion}",
   "url": "",
