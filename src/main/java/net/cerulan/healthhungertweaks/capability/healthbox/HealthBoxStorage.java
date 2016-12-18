@@ -1,4 +1,4 @@
-package net.cerulan.healthhungertweaks.capability;
+package net.cerulan.healthhungertweaks.capability.healthbox;
 
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagIntArray;

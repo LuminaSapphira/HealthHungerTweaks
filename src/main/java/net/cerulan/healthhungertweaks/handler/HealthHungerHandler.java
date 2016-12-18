@@ -1,11 +1,16 @@
 package net.cerulan.healthhungertweaks.handler;
 
 import net.cerulan.healthhungertweaks.HealthHungerTweaks;
+import net.cerulan.healthhungertweaks.capability.healthregen.HealthRegenCapabilityHandler;
+import net.cerulan.healthhungertweaks.capability.healthregen.IHealthRegenCapability;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.potion.PotionEffect;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.fml.common.eventhandler.Event.Result;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.gameevent.TickEvent;
+import net.minecraftforge.fml.common.gameevent.TickEvent.PlayerTickEvent;
+import squeek.applecore.api.AppleCoreAPI;
 import squeek.applecore.api.food.FoodEvent;
 import squeek.applecore.api.hunger.ExhaustionEvent;
 import squeek.applecore.api.hunger.HealthRegenEvent;
@@ -28,9 +33,9 @@ public class HealthHungerHandler {
 	}
 	
 	private void allowRegen(HealthRegenEvent event) {
-		if (HealthHungerTweaks.instance.configHandler.shouldDisableRegularRegen()) {
+		//if (HealthHungerTweaks.instance.configHandler.shouldDisableRegularRegen()) {
 			event.setResult(Result.DENY);
-		}
+		//}
 	}
 	
 	// TODO Peaceful config
@@ -59,10 +64,46 @@ public class HealthHungerHandler {
 	}
 	
 	@SubscribeEvent
+	public void onPlayerTick(PlayerTickEvent event) {
+		if (event.phase == TickEvent.Phase.START) return;
+		
+		if (event.player.hasCapability(HealthRegenCapabilityHandler.HEALTH_REGEN, null)) {
+			
+			IHealthRegenCapability cap = event.player.getCapability(HealthRegenCapabilityHandler.HEALTH_REGEN, null);
+			int untilStart = cap.getTicksUntilRegenStart();
+			int untilNext  = cap.getTicksUntilNextRegen();
+			if (event.player.getFoodStats().getFoodLevel() > 6 /* TODO config values */  && event.player.getHealth() < event.player.getMaxHealth()) {
+				if (untilStart > 0) {
+					// HealthHungerTweaks.Log.info("here");
+					untilStart--;
+				} else if (untilStart == 0 && untilNext > 0) {
+					untilNext--;
+				} else if (untilStart == 0 && untilNext == 0) {					
+					untilNext = 10; // TODO Config value
+					if (!event.player.worldObj.isRemote && event.player.getHealth() < event.player.getMaxHealth()) {
+						event.player.heal(1f);
+					}
+				}
+			}
+			else {
+				untilStart = 200; // TODO config value
+			}
+			cap.setData(untilStart, untilNext);
+		}
+	}
+	
+	@SubscribeEvent
 	public void onLivingHurt(LivingHurtEvent event) {
 		
 		if (event.getEntity() instanceof EntityPlayer) {
-			float newHealth = event.getEntityLiving().getHealth() - event.getAmount(); 
+			EntityPlayer player = (EntityPlayer)event.getEntity(); 
+			if (player.hasCapability(HealthRegenCapabilityHandler.HEALTH_REGEN, null)) {
+				IHealthRegenCapability cap = player.getCapability(HealthRegenCapabilityHandler.HEALTH_REGEN, null);
+				cap.setData(200, 10); // TODO config value
+				HealthHungerTweaks.Log.info("Damage At: " + System.currentTimeMillis());
+			}
+			
+			/*float newHealth = event.getEntityLiving().getHealth() - event.getAmount(); 
 			if (newHealth > 0 && newHealth <= HealthHungerTweaks.instance.configHandler.getMaxUnrecoverableHealth()) {
 				event.getEntityLiving().removePotionEffect(HealthHungerTweaks.sidedProxy.potionMending);
 			}
@@ -78,7 +119,7 @@ public class HealthHungerHandler {
 				} else {
 					event.getEntityLiving().removePotionEffect(HealthHungerTweaks.sidedProxy.potionMending);
 				}
-			}
+			}*/
 			
 
 		}

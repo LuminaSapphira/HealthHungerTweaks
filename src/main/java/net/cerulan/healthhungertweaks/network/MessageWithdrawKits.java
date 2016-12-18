@@ -2,8 +2,8 @@ package net.cerulan.healthhungertweaks.network;
 
 import io.netty.buffer.ByteBuf;
 import net.cerulan.healthhungertweaks.HealthHungerTweaks;
-import net.cerulan.healthhungertweaks.capability.HealthBoxCapabilityHandler;
-import net.cerulan.healthhungertweaks.capability.IHealthBoxCapability;
+import net.cerulan.healthhungertweaks.capability.healthbox.HealthBoxCapabilityHandler;
+import net.cerulan.healthhungertweaks.capability.healthbox.IHealthBoxCapability;
 import net.cerulan.healthhungertweaks.item.ModItems;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;

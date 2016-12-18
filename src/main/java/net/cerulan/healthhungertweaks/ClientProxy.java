@@ -1,6 +1,7 @@
 package net.cerulan.healthhungertweaks;
 
 import net.cerulan.healthhungertweaks.client.KeyBindings;
+import net.cerulan.healthhungertweaks.client.RenderHandler;
 import net.cerulan.healthhungertweaks.item.ModItems;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
@@ -35,6 +36,8 @@ public class ClientProxy extends CommonProxy {
 		KeyBindings.load();
 		KeyBindings bindings = new KeyBindings();
 		MinecraftForge.EVENT_BUS.register(bindings);
+		
+		MinecraftForge.EVENT_BUS.register(new RenderHandler());
 	}
 	
 	@Override

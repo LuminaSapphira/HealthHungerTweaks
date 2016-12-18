@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 import net.cerulan.healthhungertweaks.HealthHungerTweaks;
 import net.cerulan.healthhungertweaks.ModInfo;
-import net.cerulan.healthhungertweaks.capability.HealthBoxCapabilityHandler;
+import net.cerulan.healthhungertweaks.capability.healthbox.HealthBoxCapabilityHandler;
 import net.cerulan.healthhungertweaks.network.HealthHungerPacketHandler;
 import net.cerulan.healthhungertweaks.network.MessageUseHealthKit;
 import net.cerulan.healthhungertweaks.network.MessageWithdrawKits;

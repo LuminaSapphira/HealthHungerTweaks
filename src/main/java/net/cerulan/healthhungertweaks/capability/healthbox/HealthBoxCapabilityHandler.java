@@ -1,4 +1,4 @@
-package net.cerulan.healthhungertweaks.capability;
+package net.cerulan.healthhungertweaks.capability.healthbox;
 
 import net.cerulan.healthhungertweaks.ModInfo;
 import net.cerulan.healthhungertweaks.network.HealthHungerPacketHandler;
