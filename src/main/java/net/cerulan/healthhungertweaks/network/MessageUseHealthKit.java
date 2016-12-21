@@ -31,10 +31,10 @@ public class MessageUseHealthKit implements IMessage {
 					int prelimKit = -1;
 					// TODO config health values
 					float health = pl.getHealth();
-					if (health >= 14f ) {
+					if (health >= pl.getMaxHealth() - HealthKitStats.PRIMITIVE.getRestored() ) {
 						prelimKit = 0;
 					}
-					else if (health >= 10f) {
+					else if (health >= pl.getMaxHealth() - HealthKitStats.STANDARD.getRestored()) {
 						prelimKit = 1;
 					}
 					else if (health > 0f) {

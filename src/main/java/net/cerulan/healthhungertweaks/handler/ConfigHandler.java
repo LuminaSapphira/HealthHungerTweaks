@@ -1,7 +1,5 @@
 package net.cerulan.healthhungertweaks.handler;
 
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 import net.minecraftforge.common.config.Configuration;
@@ -27,6 +25,9 @@ public class ConfigHandler {
 	private boolean screenDarkenWhenInjure;
 	
 	private boolean disableRegularRegen;
+	private int delayUntilStart;
+	private int delayBetweenTicks;
+	private int minimumHunger;
 	
 	
 	public void load() {
@@ -41,6 +42,10 @@ public class ConfigHandler {
 		exhaustionModifier = config.get("exhaustion", "exhaustionModifier", 2.0, "An exhaustion modifier that will be multiplied to the default maximum exhausion. Higher values mean slower food drain.").getDouble();
 		
 		disableRegularRegen = config.get("mending", "disableRegularRegen", true, "Toggles whether regular regen (from food) should be disabled, and players must use health kits. Recommended if food is made easier.").getBoolean();
+		delayUntilStart = config.get("mending", "delayUntilStart", 200, "The delay (in ticks) before a player will begin to regenerate health. Negative values disable this functionality, forcing players to rely solely on health kits or potions.").getInt();
+		delayBetweenTicks = config.get("mending", "delayBetweenTicks", 10, "The delay (in ticks) between each half-heart restored.").getInt();
+		
+		minimumHunger = config.get("mending", "minimumHunger", 6, "The minimum hunger (in half-shanks) necessary to be able to heal.").getInt();
 		
 		kitCooldown = config.get("mending", "healthKitCooldown", 600, "The cooldown period (in ticks) while a player may not use a health kit after previously using one.").getInt();
 		
@@ -88,5 +93,17 @@ public class ConfigHandler {
 	public int getCooldownY() { return this.cdY; }
 	
 	public boolean shouldScreenDarkenWhenInjured() { return this.screenDarkenWhenInjure; }
+
+	public int getDelayUntilStart() {
+		return delayUntilStart;
+	}
+
+	public int getDelayBetweenTicks() {
+		return delayBetweenTicks;
+	}
+
+	public int getMinimumHunger() {
+		return minimumHunger;
+	}
 	
 }

@@ -81,21 +81,20 @@ public class HealthHungerHandler {
 
 				int untilStart = hRegenCap.getTicksUntilRegenStart();
 				int untilNext = hRegenCap.getTicksUntilNextRegen();
-				if (event.player.getFoodStats().getFoodLevel() > 6
-						/* TODO config values */ && event.player.getHealth() < event.player.getMaxHealth()) {
+				if (event.player.getFoodStats().getFoodLevel() >= HealthHungerTweaks.instance.configHandler.getMinimumHunger()
+						&& event.player.getHealth() < event.player.getMaxHealth()) {
 					if (untilStart > 0) {
-						// HealthHungerTweaks.Log.info("here");
 						untilStart--;
 					} else if (untilStart == 0 && untilNext > 0) {
 						untilNext--;
 					} else if (untilStart == 0 && untilNext == 0) {
-						untilNext = 10; // TODO Config value
+						untilNext = HealthHungerTweaks.instance.configHandler.getDelayBetweenTicks();
 						if (!event.player.worldObj.isRemote && event.player.getHealth() < event.player.getMaxHealth()) {
 							event.player.heal(1f);
 						}
 					}
 				} else {
-					untilStart = 200; // TODO config value
+					untilStart = HealthHungerTweaks.instance.configHandler.getDelayUntilStart();
 				}
 				hRegenCap.setData(untilStart, untilNext);
 			}
@@ -109,7 +108,7 @@ public class HealthHungerHandler {
 			EntityPlayer player = (EntityPlayer)event.getEntity(); 
 			if (player.hasCapability(HealthRegenCapabilityHandler.HEALTH_REGEN, null)) {
 				IHealthRegenCapability cap = player.getCapability(HealthRegenCapabilityHandler.HEALTH_REGEN, null);
-				cap.setData(200, 10); // TODO config value
+				cap.setData(HealthHungerTweaks.instance.configHandler.getDelayUntilStart(), HealthHungerTweaks.instance.configHandler.getDelayBetweenTicks());
 				//HealthHungerTweaks.Log.info("Damage At: " + System.currentTimeMillis());
 			}
 			
