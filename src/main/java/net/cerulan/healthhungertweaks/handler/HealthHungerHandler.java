@@ -34,9 +34,9 @@ public class HealthHungerHandler {
 	}
 	
 	private void allowRegen(HealthRegenEvent event) {
-		//if (HealthHungerTweaks.instance.configHandler.shouldDisableRegularRegen()) {
+		if (HealthHungerTweaks.instance.configHandler.shouldDisableRegularRegen()) {
 			event.setResult(Result.DENY);
-		//}
+		}
 	}
 	
 	// TODO Peaceful config
