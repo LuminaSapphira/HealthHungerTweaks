@@ -1,4 +1,4 @@
-package net.cerulan.healthhungertweaks.capability;
+package net.cerulan.healthhungertweaks.capability.healthbox;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.MathHelper;
@@ -6,6 +6,7 @@ import net.minecraft.util.math.MathHelper;
 public class HealthBoxCapability implements IHealthBoxCapability {
 
 	int[] healthKits = new int[] { 0, 0, 0 };
+	int cooldown = 0;
 	
 	@Override
 	public int[] getHealthKits() {
@@ -43,6 +44,16 @@ public class HealthBoxCapability implements IHealthBoxCapability {
 	@Override
 	public void setHealthKits(int[] health) {
 		this.healthKits = health;
+	}
+
+	@Override
+	public int getCooldown() {
+		return this.cooldown;
+	}
+
+	@Override
+	public void setCooldown(int cooldown) {
+		this.cooldown = cooldown;
 	}
 
 }

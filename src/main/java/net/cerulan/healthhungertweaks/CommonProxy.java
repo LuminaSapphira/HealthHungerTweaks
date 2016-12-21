@@ -1,6 +1,7 @@
 package net.cerulan.healthhungertweaks;
 
-import net.cerulan.healthhungertweaks.capability.HealthBoxCapabilityHandler;
+import net.cerulan.healthhungertweaks.capability.healthbox.HealthBoxCapabilityHandler;
+import net.cerulan.healthhungertweaks.capability.healthregen.HealthRegenCapabilityHandler;
 import net.cerulan.healthhungertweaks.gui.GuiHandler;
 import net.cerulan.healthhungertweaks.handler.HealthHungerHandler;
 import net.cerulan.healthhungertweaks.network.HealthHungerPacketHandler;
@@ -42,7 +43,11 @@ public class CommonProxy {
 		
 		HealthBoxCapabilityHandler healthBoxCapHand = new HealthBoxCapabilityHandler();
 		healthBoxCapHand.register();
-		MinecraftForge.EVENT_BUS.register(healthBoxCapHand);		
+		MinecraftForge.EVENT_BUS.register(healthBoxCapHand);	
+		
+		HealthRegenCapabilityHandler healthRegenCapHand = new HealthRegenCapabilityHandler();
+		healthRegenCapHand.register();
+		MinecraftForge.EVENT_BUS.register(healthRegenCapHand);
 	}
 
 	/**

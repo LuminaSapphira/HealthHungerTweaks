@@ -3,10 +3,10 @@ package net.cerulan.healthhungertweaks.network;
 import io.netty.buffer.ByteBuf;
 import net.cerulan.healthhungertweaks.HealthHungerTweaks;
 import net.cerulan.healthhungertweaks.HealthKitStats;
-import net.cerulan.healthhungertweaks.capability.HealthBoxCapabilityHandler;
-import net.cerulan.healthhungertweaks.capability.IHealthBoxCapability;
+import net.cerulan.healthhungertweaks.capability.healthbox.HealthBoxCapabilityHandler;
+import net.cerulan.healthhungertweaks.capability.healthbox.IHealthBoxCapability;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.potion.PotionEffect;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextComponentTranslation;
@@ -26,14 +26,15 @@ public class MessageUseHealthKit implements IMessage {
 				IHealthBoxCapability healthbox = pl.getCapability(HealthBoxCapabilityHandler.HEALTH_BOX, null);
 				int[] kits = healthbox.getHealthKits();
 				int useKit = -1;
-				if (message.kit == -1) {
+				
+				if (message.kit == -1 && healthbox.getCooldown() == 0) {
 					int prelimKit = -1;
 					// TODO config health values
 					float health = pl.getHealth();
-					if (health >= 14f ) {
+					if (health >= pl.getMaxHealth() - HealthKitStats.PRIMITIVE.getRestored() ) {
 						prelimKit = 0;
 					}
-					else if (health >= 10f) {
+					else if (health >= pl.getMaxHealth() - HealthKitStats.STANDARD.getRestored()) {
 						prelimKit = 1;
 					}
 					else if (health > 0f) {
@@ -61,23 +62,21 @@ public class MessageUseHealthKit implements IMessage {
 					useKit = resultkit;
 					
 				}
-				else if ((message.kit >= 0 && message.kit <= 2)){
+				else if ((message.kit >= 0 && message.kit <= 2) && healthbox.getCooldown() == 0) {
 					if (kits[message.kit] > 0) useKit = message.kit;
 				}
 				
 				if (useKit != -1) {
 					kits[useKit] = kits[useKit] - 1;
 					healthbox.setHealthKits(kits);
-					HealthHungerPacketHandler.INSTANCE.sendTo(new MessageSyncHealthBox(healthbox.getHealthKits()),
+					healthbox.setCooldown(HealthHungerTweaks.instance.configHandler.getHealthKitCooldown());
+					HealthHungerPacketHandler.INSTANCE.sendTo(new MessageSyncHealthBox(healthbox.getHealthKits(), healthbox.getCooldown()),
 							ctx.getServerHandler().playerEntity);
 					
 					HealthKitStats stats = HealthKitStats.values()[useKit];
-					float healAmount = stats.getMaxInstantHealth();
-					if (pl.getHealth() + healAmount > 14f) {
-						healAmount = 14f - pl.getHealth();
-					}
+					float healAmount = stats.getRestored();
+					healAmount = MathHelper.clamp_float(healAmount, 0, pl.getMaxHealth() - pl.getHealth());
 					pl.heal(healAmount);
-					pl.addPotionEffect(new PotionEffect(HealthHungerTweaks.sidedProxy.potionMending, stats.getMendingTicks(), 0, false, true));
 					ITextComponent text = new TextComponentString(new TextComponentTranslation("healthkit.useHealthKit").getFormattedText()
 							.replace("${item}", new TextComponentTranslation(String.format("item.healthKit.%1$d.name", useKit)).getFormattedText()));
 					text.getStyle().setColor(TextFormatting.AQUA);

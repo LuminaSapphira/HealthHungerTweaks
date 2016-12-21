@@ -1,8 +1,8 @@
-package net.cerulan.healthhungertweaks.capability;
+package net.cerulan.healthhungertweaks.capability.healthregen;
 
 import net.cerulan.healthhungertweaks.ModInfo;
 import net.cerulan.healthhungertweaks.network.HealthHungerPacketHandler;
-import net.cerulan.healthhungertweaks.network.MessageSyncHealthBox;
+import net.cerulan.healthhungertweaks.network.MessageSyncHealthRegen;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -19,34 +19,35 @@ import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
 
-public class HealthBoxCapabilityHandler {
-	@CapabilityInject(IHealthBoxCapability.class)
-    public static final Capability<IHealthBoxCapability> HEALTH_BOX = null;
-	
-	class ProviderHealthBox implements ICapabilitySerializable<NBTBase> {
+public class HealthRegenCapabilityHandler {
 
-		private IHealthBoxCapability instance = HEALTH_BOX.getDefaultInstance();
+	@CapabilityInject(IHealthRegenCapability.class)
+    public static final Capability<IHealthRegenCapability> HEALTH_REGEN = null;
+	
+	class ProviderHealthRegen implements ICapabilitySerializable<NBTBase> {
+
+		private IHealthRegenCapability instance = HEALTH_REGEN.getDefaultInstance();
 		
 		@Override
 		public boolean hasCapability(Capability<?> capability, EnumFacing facing) {
-			if (HEALTH_BOX != null && capability == HEALTH_BOX) return true;
+			if (HEALTH_REGEN != null && capability == HEALTH_REGEN) return true;
 			return false;
 		}
 
 		@Override
 		public <T> T getCapability(Capability<T> capability, EnumFacing facing) {
-			if (hasCapability(capability, facing)) return HEALTH_BOX.cast(instance);
+			if (hasCapability(capability, facing)) return HEALTH_REGEN.cast(instance);
 			return null;
 		}
 
 		@Override
 		public NBTBase serializeNBT() {
-			return HEALTH_BOX.getStorage().writeNBT(HEALTH_BOX, instance, null);
+			return HEALTH_REGEN.getStorage().writeNBT(HEALTH_REGEN, instance, null);
 		}
 
 		@Override
 		public void deserializeNBT(NBTBase nbt) {
-			HEALTH_BOX.getStorage().readNBT(HEALTH_BOX, instance, null, nbt);			
+			HEALTH_REGEN.getStorage().readNBT(HEALTH_REGEN, instance, null, nbt);			
 		}
 
 	}
@@ -54,7 +55,7 @@ public class HealthBoxCapabilityHandler {
 	@SubscribeEvent
 	public void attachEntityCapabilities(AttachCapabilitiesEvent<Entity> event) {
 		if (event.getObject() instanceof EntityPlayer) {
-			event.addCapability(new ResourceLocation(ModInfo.MODID, "health_box"), new ProviderHealthBox());
+			event.addCapability(new ResourceLocation(ModInfo.MODID, "health_regen"), new ProviderHealthRegen());
 		}
 	}
 	
@@ -62,30 +63,33 @@ public class HealthBoxCapabilityHandler {
 	public void onPlayerLoggedIn(PlayerLoggedInEvent event) {
 		if(!event.player.worldObj.isRemote) {
 			EntityPlayerMP player = (EntityPlayerMP)event.player;
-			int[] health = player.getCapability(HEALTH_BOX, null).getHealthKits();
-			HealthHungerPacketHandler.INSTANCE.sendTo(new MessageSyncHealthBox(health), player);
+			int ticksUntilStart = player.getCapability(HEALTH_REGEN, null).getTicksUntilRegenStart();
+			int ticksUntilRegen = player.getCapability(HEALTH_REGEN, null).getTicksUntilNextRegen();
+			HealthHungerPacketHandler.INSTANCE.sendTo(new MessageSyncHealthRegen(ticksUntilStart, ticksUntilRegen), player);
 		}
 	}
 	
 	@SubscribeEvent
 	public void onPlayerClone(PlayerEvent.Clone event) {
 		if (event.isWasDeath()) {
-			IHealthBoxCapability cap = event.getOriginal().getCapability(HEALTH_BOX, null);
-			event.getEntityPlayer().getCapability(HEALTH_BOX, null).setHealthKits(cap.getHealthKits());
+			IHealthRegenCapability cap = event.getOriginal().getCapability(HEALTH_REGEN, null);
+			event.getEntityPlayer().getCapability(HEALTH_REGEN, null).setData(cap.getTicksUntilRegenStart(), cap.getTicksUntilNextRegen());
 		}
 	}
 	
 	@SubscribeEvent
 	public void onEntityJoinWorld(EntityJoinWorldEvent event) {
 		if (event.getEntity() instanceof EntityPlayerMP && !event.getEntity().worldObj.isRemote) {
-			IHealthBoxCapability cap = event.getEntity().getCapability(HEALTH_BOX, null);
-			int[] health = cap.getHealthKits();
-			HealthHungerPacketHandler.INSTANCE.sendTo(new MessageSyncHealthBox(health), (EntityPlayerMP)event.getEntity());
+			IHealthRegenCapability cap = event.getEntity().getCapability(HEALTH_REGEN, null);
+			int ticksUntilStart = cap.getTicksUntilRegenStart();
+			int ticksUntilRegen = cap.getTicksUntilNextRegen();
+			HealthHungerPacketHandler.INSTANCE.sendTo(new MessageSyncHealthRegen(ticksUntilStart, ticksUntilRegen), (EntityPlayerMP)event.getEntity());
 		}
 	}
 	
 	public void register() {
-		CapabilityManager.INSTANCE.register(IHealthBoxCapability.class, new HealthBoxStorage(), HealthBoxCapability.class);
+		CapabilityManager.INSTANCE.register(IHealthRegenCapability.class, new HealthRegenCapability.HealthRegenStorage(), HealthRegenCapability.class);
 	}
+	
 	
 }

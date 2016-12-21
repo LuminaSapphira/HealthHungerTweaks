@@ -1,6 +1,6 @@
 package net.cerulan.healthhungertweaks.gui;
 
-import net.cerulan.healthhungertweaks.capability.HealthBoxCapabilityHandler;
+import net.cerulan.healthhungertweaks.capability.healthbox.HealthBoxCapabilityHandler;
 import net.cerulan.healthhungertweaks.item.ModItems;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
