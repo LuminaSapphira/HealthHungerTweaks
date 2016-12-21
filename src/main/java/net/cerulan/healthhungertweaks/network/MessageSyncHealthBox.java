@@ -19,6 +19,7 @@ public class MessageSyncHealthBox implements IMessage{
 				EntityPlayer pl = HealthHungerTweaks.sidedProxy.getPlayerEntity(ctx);
 				IHealthBoxCapability cap = pl.getCapability(HealthBoxCapabilityHandler.HEALTH_BOX, null);
 				cap.setHealthKits(message.health);
+				cap.setCooldown(message.cooldown);
 				
 			});
 			return null;
@@ -27,19 +28,21 @@ public class MessageSyncHealthBox implements IMessage{
 	}
 	
 	private int[] health;
+	private int cooldown;
 	
 	public MessageSyncHealthBox() {
 		
 	}
 	
-	public MessageSyncHealthBox(int[] health) {
+	public MessageSyncHealthBox(int[] health, int cooldown) {
 		this.health = health;
+		this.cooldown = cooldown;
 	}
 
 	@Override
 	public void fromBytes(ByteBuf buf) {
 		this.health = new int[] {buf.readInt(), buf.readInt(), buf.readInt()};
-		
+		this.cooldown = buf.readInt();
 	}
 
 	@Override
@@ -49,6 +52,7 @@ public class MessageSyncHealthBox implements IMessage{
 			
 			// TODO Low priority: dynamic # of kits
 		}
+		buf.writeInt(cooldown);
 	}
 
 }

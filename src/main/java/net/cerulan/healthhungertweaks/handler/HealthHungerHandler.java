@@ -1,6 +1,8 @@
 package net.cerulan.healthhungertweaks.handler;
 
 import net.cerulan.healthhungertweaks.HealthHungerTweaks;
+import net.cerulan.healthhungertweaks.capability.healthbox.HealthBoxCapabilityHandler;
+import net.cerulan.healthhungertweaks.capability.healthbox.IHealthBoxCapability;
 import net.cerulan.healthhungertweaks.capability.healthregen.HealthRegenCapabilityHandler;
 import net.cerulan.healthhungertweaks.capability.healthregen.IHealthRegenCapability;
 import net.minecraft.entity.player.EntityPlayer;
@@ -10,7 +12,6 @@ import net.minecraftforge.fml.common.eventhandler.Event.Result;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.PlayerTickEvent;
-import squeek.applecore.api.AppleCoreAPI;
 import squeek.applecore.api.food.FoodEvent;
 import squeek.applecore.api.hunger.ExhaustionEvent;
 import squeek.applecore.api.hunger.HealthRegenEvent;
@@ -65,30 +66,39 @@ public class HealthHungerHandler {
 	
 	@SubscribeEvent
 	public void onPlayerTick(PlayerTickEvent event) {
-		if (event.phase == TickEvent.Phase.START) return;
-		
-		if (event.player.hasCapability(HealthRegenCapabilityHandler.HEALTH_REGEN, null)) {
-			
-			IHealthRegenCapability cap = event.player.getCapability(HealthRegenCapabilityHandler.HEALTH_REGEN, null);
-			int untilStart = cap.getTicksUntilRegenStart();
-			int untilNext  = cap.getTicksUntilNextRegen();
-			if (event.player.getFoodStats().getFoodLevel() > 6 /* TODO config values */  && event.player.getHealth() < event.player.getMaxHealth()) {
-				if (untilStart > 0) {
-					// HealthHungerTweaks.Log.info("here");
-					untilStart--;
-				} else if (untilStart == 0 && untilNext > 0) {
-					untilNext--;
-				} else if (untilStart == 0 && untilNext == 0) {					
-					untilNext = 10; // TODO Config value
-					if (!event.player.worldObj.isRemote && event.player.getHealth() < event.player.getMaxHealth()) {
-						event.player.heal(1f);
-					}
+		if (event.phase == TickEvent.Phase.END) {
+			if (event.player.hasCapability(HealthBoxCapabilityHandler.HEALTH_BOX, null)) {
+				IHealthBoxCapability hBoxCap = event.player.getCapability(HealthBoxCapabilityHandler.HEALTH_BOX,
+						null);
+				if (hBoxCap.getCooldown() > 0) {
+					hBoxCap.setCooldown(hBoxCap.getCooldown() - 1);
 				}
 			}
-			else {
-				untilStart = 200; // TODO config value
+			if (event.player.hasCapability(HealthRegenCapabilityHandler.HEALTH_REGEN, null)) {
+
+				IHealthRegenCapability hRegenCap = event.player.getCapability(HealthRegenCapabilityHandler.HEALTH_REGEN,
+						null);
+
+				int untilStart = hRegenCap.getTicksUntilRegenStart();
+				int untilNext = hRegenCap.getTicksUntilNextRegen();
+				if (event.player.getFoodStats().getFoodLevel() > 6
+						/* TODO config values */ && event.player.getHealth() < event.player.getMaxHealth()) {
+					if (untilStart > 0) {
+						// HealthHungerTweaks.Log.info("here");
+						untilStart--;
+					} else if (untilStart == 0 && untilNext > 0) {
+						untilNext--;
+					} else if (untilStart == 0 && untilNext == 0) {
+						untilNext = 10; // TODO Config value
+						if (!event.player.worldObj.isRemote && event.player.getHealth() < event.player.getMaxHealth()) {
+							event.player.heal(1f);
+						}
+					}
+				} else {
+					untilStart = 200; // TODO config value
+				}
+				hRegenCap.setData(untilStart, untilNext);
 			}
-			cap.setData(untilStart, untilNext);
 		}
 	}
 	
@@ -100,9 +110,11 @@ public class HealthHungerHandler {
 			if (player.hasCapability(HealthRegenCapabilityHandler.HEALTH_REGEN, null)) {
 				IHealthRegenCapability cap = player.getCapability(HealthRegenCapabilityHandler.HEALTH_REGEN, null);
 				cap.setData(200, 10); // TODO config value
-				HealthHungerTweaks.Log.info("Damage At: " + System.currentTimeMillis());
+				//HealthHungerTweaks.Log.info("Damage At: " + System.currentTimeMillis());
 			}
 			
+			
+			// Old Logic... was kinda buggy
 			/*float newHealth = event.getEntityLiving().getHealth() - event.getAmount(); 
 			if (newHealth > 0 && newHealth <= HealthHungerTweaks.instance.configHandler.getMaxUnrecoverableHealth()) {
 				event.getEntityLiving().removePotionEffect(HealthHungerTweaks.sidedProxy.potionMending);

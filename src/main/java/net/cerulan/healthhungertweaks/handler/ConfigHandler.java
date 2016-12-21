@@ -20,11 +20,21 @@ public class ConfigHandler {
 	private boolean useDmgWhitelist;
 	private List<String> damageWhitelist;
 	private List<String> damageBlacklist;
+	private int kitCooldown;
+	
+	private int showCooldownMode;
+	private int cdX, cdY;
+	private boolean screenDarkenWhenInjure;
 	
 	private boolean disableRegularRegen;
 	
 	
 	public void load() {
+		showCooldownMode = config.get("client", "showCooldownMode", 2, "Sets the mode that determines how the health kit cooldown will be displayed. 0=Not At All, 1=Only Icon, 2=Icon + Time Remaining").getInt();
+		cdX = config.get("client", "cooldownX", 5, "The X Coordinate of the Cooldown Indicator").getInt();
+		cdY = config.get("client", "cooldownY", 5, "The Y Coordinate of the Cooldown Indicator").getInt();
+		screenDarkenWhenInjure = config.get("client", "screenDarken", true, "Whether or not the screen should darken when injured").getBoolean();
+		
 		doSatiation = config.get("satiated", "enableSatiated", true, "Toggles whether eating food gives a satiated effect that disabled food drain for the duration.").getBoolean();
 		satiatedDuration = config.get("satiated", "satiatedDuration", 600, "This value will be multipled to the food value of the food to get the duration (in ticks) of the satiated effect.").getInt();
 		
@@ -32,7 +42,9 @@ public class ConfigHandler {
 		
 		disableRegularRegen = config.get("mending", "disableRegularRegen", true, "Toggles whether regular regen (from food) should be disabled, and players must use health kits. Recommended if food is made easier.").getBoolean();
 		
-		maxUnrecoverableHealth = config.get("mending", "maxUnrecoverableHealth", 5, "The highest health from which the mending buff will not get applied. (If you drop below this health, you will lose the mending effect)").getInt();
+		kitCooldown = config.get("mending", "healthKitCooldown", 600, "The cooldown period (in ticks) while a player may not use a health kit after previously using one.").getInt();
+		
+		/*maxUnrecoverableHealth = config.get("mending", "maxUnrecoverableHealth", 5, "The highest health from which the mending buff will not get applied. (If you drop below this health, you will lose the mending effect)").getInt();
 		useDmgWhitelist = config.get("mending", "useDamageWhitelist", true, "Sets whether to use a whitelist or a blacklist for applying the mending effect following damage from a damage source.").getBoolean();
 		String[] dmgWht = config.get("mending", "damageWhitelist", new String[] {"hotFloor", "inWall", "drown", "cactus", "fall", "flyIntoWall", "fallingBlock"},
 				"Declares a whitelist of damage sources that will apply a mending effect after taking damage. Has no effect if useDamageWhitelist is false."
@@ -44,7 +56,7 @@ public class ConfigHandler {
 				"Declares a whitelist of damage sources that will apply a mending effect after taking damage. Has no effect if useDamageWhitelist is true."
 				+ " Available values: inFire, lightningBolt, onFire, lava, hotFloor, inWall, drown, cactus, fall,"
 				+ " flyIntoWall, outOfWorld, generic, magic, wither, anvil, fallingBlock, dragonBreath").getStringList();
-		damageBlacklist = Collections.unmodifiableList(Arrays.asList(dmgBlk));
+		damageBlacklist = Collections.unmodifiableList(Arrays.asList(dmgBlk));*/
 		
 		config.save();
 	}
@@ -67,5 +79,14 @@ public class ConfigHandler {
 	public int getSatiatedDuration() { return satiatedDuration; }
 	
 	public boolean shouldDisableRegularRegen() { return disableRegularRegen; }
+	
+	public int getHealthKitCooldown() { return this.kitCooldown; }
+	
+	public int getShowCooldownMode() { return this.showCooldownMode; }
+	
+	public int getCooldownX() { return this.cdX; }
+	public int getCooldownY() { return this.cdY; }
+	
+	public boolean shouldScreenDarkenWhenInjured() { return this.screenDarkenWhenInjure; }
 	
 }

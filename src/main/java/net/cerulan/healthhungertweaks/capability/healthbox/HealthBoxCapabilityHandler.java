@@ -63,7 +63,8 @@ public class HealthBoxCapabilityHandler {
 		if(!event.player.worldObj.isRemote) {
 			EntityPlayerMP player = (EntityPlayerMP)event.player;
 			int[] health = player.getCapability(HEALTH_BOX, null).getHealthKits();
-			HealthHungerPacketHandler.INSTANCE.sendTo(new MessageSyncHealthBox(health), player);
+			int cd = player.getCapability(HEALTH_BOX, null).getCooldown();
+			HealthHungerPacketHandler.INSTANCE.sendTo(new MessageSyncHealthBox(health, cd), player);
 		}
 	}
 	
@@ -72,6 +73,7 @@ public class HealthBoxCapabilityHandler {
 		if (event.isWasDeath()) {
 			IHealthBoxCapability cap = event.getOriginal().getCapability(HEALTH_BOX, null);
 			event.getEntityPlayer().getCapability(HEALTH_BOX, null).setHealthKits(cap.getHealthKits());
+			event.getEntityPlayer().getCapability(HEALTH_BOX, null).setCooldown(0);
 		}
 	}
 	
@@ -80,7 +82,8 @@ public class HealthBoxCapabilityHandler {
 		if (event.getEntity() instanceof EntityPlayerMP && !event.getEntity().worldObj.isRemote) {
 			IHealthBoxCapability cap = event.getEntity().getCapability(HEALTH_BOX, null);
 			int[] health = cap.getHealthKits();
-			HealthHungerPacketHandler.INSTANCE.sendTo(new MessageSyncHealthBox(health), (EntityPlayerMP)event.getEntity());
+			int cd = cap.getCooldown();
+			HealthHungerPacketHandler.INSTANCE.sendTo(new MessageSyncHealthBox(health, cd), (EntityPlayerMP)event.getEntity());
 		}
 	}
 	

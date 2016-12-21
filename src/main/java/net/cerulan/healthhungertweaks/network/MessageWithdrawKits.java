@@ -32,7 +32,7 @@ public class MessageWithdrawKits implements IMessage {
 					ply.worldObj.spawnEntityInWorld(new EntityItem(ply.worldObj, ply.posX, ply.posY, ply.posZ,
 							new ItemStack(ModItems.itemHealthKit, removeAmount, kitindex)));
 
-					HealthHungerPacketHandler.INSTANCE.sendTo(new MessageSyncHealthBox(healthbox.getHealthKits()),
+					HealthHungerPacketHandler.INSTANCE.sendTo(new MessageSyncHealthBox(healthbox.getHealthKits(), healthbox.getCooldown()),
 							ctx.getServerHandler().playerEntity);
 				}
 			});
