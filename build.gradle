@@ -23,7 +23,7 @@ repositories {
 
 version = "2.0.0-beta1"
 group= "net.cerulan.healthhungertweaks"
-archivesBaseName = "healthhungertweaks"
+archivesBaseName = "healthhungertweaks" + "-" + project.mc_version
 
 sourceCompatibility = targetCompatibility = "1.8" // Need this here so eclipse task generates correctly.
 compileJava {
