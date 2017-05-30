@@ -22,7 +22,7 @@ public class MessageUseHealthKit implements IMessage {
 		@Override
 		public IMessage onMessage(MessageUseHealthKit message, MessageContext ctx) {
 			HealthHungerTweaks.sidedProxy.getThreadFromContext(ctx).addScheduledTask(() -> {
-				EntityPlayer pl = ctx.getServerHandler().playerEntity;
+				EntityPlayer pl = ctx.getServerHandler().player;
 				IHealthBoxCapability healthbox = pl.getCapability(HealthBoxCapabilityHandler.HEALTH_BOX, null);
 				int[] kits = healthbox.getHealthKits();
 				int useKit = -1;
@@ -71,16 +71,16 @@ public class MessageUseHealthKit implements IMessage {
 					healthbox.setHealthKits(kits);
 					healthbox.setCooldown(HealthHungerTweaks.instance.configHandler.getHealthKitCooldown());
 					HealthHungerPacketHandler.INSTANCE.sendTo(new MessageSyncHealthBox(healthbox.getHealthKits(), healthbox.getCooldown()),
-							ctx.getServerHandler().playerEntity);
+							ctx.getServerHandler().player);
 					
 					HealthKitStats stats = HealthKitStats.values()[useKit];
 					float healAmount = stats.getRestored();
-					healAmount = MathHelper.clamp_float(healAmount, 0, pl.getMaxHealth() - pl.getHealth());
+					healAmount = MathHelper.clamp(healAmount, 0, pl.getMaxHealth() - pl.getHealth());
 					pl.heal(healAmount);
 					ITextComponent text = new TextComponentString(new TextComponentTranslation("healthkit.useHealthKit").getFormattedText()
 							.replace("${item}", new TextComponentTranslation(String.format("item.healthKit.%1$d.name", useKit)).getFormattedText()));
 					text.getStyle().setColor(TextFormatting.AQUA);
-					pl.addChatMessage(text);
+					pl.sendMessage(text);
 				}
 			});
 			return null;

@@ -5,6 +5,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.NonNullList;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.RecipeSorter;
 import net.minecraftforge.oredict.RecipeSorter.Category;
@@ -22,19 +23,16 @@ public class ModRecipes {
 			}
 
 			@Override
-			public ItemStack[] getRemainingItems(InventoryCrafting inv) {
-				ItemStack[] aitemstack = new ItemStack[inv.getSizeInventory()];
+			public NonNullList<ItemStack> getRemainingItems(InventoryCrafting inv) {
+				NonNullList<ItemStack> remaining = NonNullList.<ItemStack>withSize(inv.getSizeInventory(), ItemStack.EMPTY);
 
-				for (int i = 0; i < aitemstack.length; ++i) {
+				for (int i = 0; i < inv.getSizeInventory(); ++i) {
 					ItemStack itemstack = inv.getStackInSlot(i);
-					if (itemstack != null && itemstack.isItemEqual(new ItemStack(Items.BOWL))) {
-						aitemstack[i] = new ItemStack(Items.BOWL, 1);
-					}
-					else {
-						aitemstack[i] = null;
-					}
+					if (itemstack.isItemEqual(new ItemStack(Items.BOWL))) {
+						remaining.set(i, new ItemStack(Items.BOWL, 1));
+					}				
 				}
-				return aitemstack;
+				return remaining;
 			}
 			
 		}
@@ -46,19 +44,15 @@ public class ModRecipes {
 			}
 
 			@Override
-			public ItemStack[] getRemainingItems(InventoryCrafting inv) {
-				ItemStack[] aitemstack = new ItemStack[inv.getSizeInventory()];
-
-				for (int i = 0; i < aitemstack.length; ++i) {
+			public NonNullList<ItemStack> getRemainingItems(InventoryCrafting inv) {
+				NonNullList<ItemStack> remaining = NonNullList.<ItemStack>withSize(inv.getSizeInventory(), ItemStack.EMPTY);
+				for (int i = 0; i < inv.getSizeInventory(); ++i) {
 					ItemStack itemstack = inv.getStackInSlot(i);
-					if (itemstack != null && itemstack.isItemEqual(new ItemStack(Items.WATER_BUCKET))) {
-						aitemstack[i] = new ItemStack(Items.BUCKET, 1);
-					}
-					else {
-						aitemstack[i] = null;
+					if (itemstack.isItemEqual(new ItemStack(Items.WATER_BUCKET))) {
+						remaining.set(i, new ItemStack(Items.BUCKET, 1));					
 					}
 				}
-				return aitemstack;
+				return remaining;
 			}
 			
 		}

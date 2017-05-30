@@ -1,6 +1,6 @@
 {
     "parent": "item/generated",
     "textures": {
-        "layer0": "healthhungertweaks:items/woodFiberBandage"
+        "layer0": "healthhungertweaks:items/wood_fiber_bandage"
     }
 }

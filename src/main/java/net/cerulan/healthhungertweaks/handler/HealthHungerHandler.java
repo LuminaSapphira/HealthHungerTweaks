@@ -89,7 +89,7 @@ public class HealthHungerHandler {
 						untilNext--;
 					} else if (untilStart == 0 && untilNext == 0) {
 						untilNext = HealthHungerTweaks.instance.configHandler.getDelayBetweenTicks();
-						if (!event.player.worldObj.isRemote && event.player.getHealth() < event.player.getMaxHealth()) {
+						if (!event.player.world.isRemote && event.player.getHealth() < event.player.getMaxHealth()) {
 							event.player.heal(1f);
 						}
 					}

@@ -60,7 +60,7 @@ public class HealthBoxCapabilityHandler {
 	
 	@SubscribeEvent
 	public void onPlayerLoggedIn(PlayerLoggedInEvent event) {
-		if(!event.player.worldObj.isRemote) {
+		if(!event.player.world.isRemote) {
 			EntityPlayerMP player = (EntityPlayerMP)event.player;
 			int[] health = player.getCapability(HEALTH_BOX, null).getHealthKits();
 			int cd = player.getCapability(HEALTH_BOX, null).getCooldown();
@@ -79,7 +79,7 @@ public class HealthBoxCapabilityHandler {
 	
 	@SubscribeEvent
 	public void onEntityJoinWorld(EntityJoinWorldEvent event) {
-		if (event.getEntity() instanceof EntityPlayerMP && !event.getEntity().worldObj.isRemote) {
+		if (event.getEntity() instanceof EntityPlayerMP && !event.getEntity().world.isRemote) {
 			IHealthBoxCapability cap = event.getEntity().getCapability(HEALTH_BOX, null);
 			int[] health = cap.getHealthKits();
 			int cd = cap.getCooldown();

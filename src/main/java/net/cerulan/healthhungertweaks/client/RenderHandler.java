@@ -40,7 +40,7 @@ public class RenderHandler {
 						GlStateManager.DestFactor.ZERO);
 
 				float alpha = MathHelper
-						.clamp_float((float) mc.thePlayer.getHealth() / (mc.thePlayer.getMaxHealth() - 5f), 0f, 1f);
+						.clamp((float) mc.player.getHealth() / (mc.player.getMaxHealth() - 5f), 0f, 1f);
 
 				GlStateManager.color(0.7F, 0F, 0F, 1f - alpha);
 				GlStateManager.disableAlpha();
@@ -62,8 +62,8 @@ public class RenderHandler {
 		}
 		if (event.getType() == ElementType.HEALTH) {
 			// Cooldown indicator
-			if (this.mc.thePlayer.hasCapability(HealthBoxCapabilityHandler.HEALTH_BOX, null)) {
-				IHealthBoxCapability boxCap = this.mc.thePlayer.getCapability(HealthBoxCapabilityHandler.HEALTH_BOX,
+			if (this.mc.player.hasCapability(HealthBoxCapabilityHandler.HEALTH_BOX, null)) {
+				IHealthBoxCapability boxCap = this.mc.player.getCapability(HealthBoxCapabilityHandler.HEALTH_BOX,
 						null);
 				if (boxCap.getCooldown() > 0) {
 					int x = HealthHungerTweaks.instance.configHandler.getCooldownX();
@@ -77,8 +77,8 @@ public class RenderHandler {
 						this.mc.getTextureManager().bindTexture(Gui.ICONS);
 					}
 					if (HealthHungerTweaks.instance.configHandler.getShowCooldownMode() == 2) {
-						this.mc.ingameGUI.drawString(this.mc.fontRendererObj, String.valueOf(boxCap.getCooldown() / 20 + 1),
-								x, y + ((16 - this.mc.fontRendererObj.FONT_HEIGHT) / 2), Color.WHITE.getRGB());
+						this.mc.ingameGUI.drawString(this.mc.fontRenderer, String.valueOf(boxCap.getCooldown() / 20 + 1),
+								x, y + ((16 - this.mc.fontRenderer.FONT_HEIGHT) / 2), Color.WHITE.getRGB());
 						this.mc.getTextureManager().bindTexture(Gui.ICONS);
 					}
 				}

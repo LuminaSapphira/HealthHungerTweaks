@@ -20,23 +20,23 @@ public class HealthBoxCapability implements IHealthBoxCapability {
 
 	@Override
 	public ItemStack getStackInSlot(int slot) {
-		return null;
+		return ItemStack.EMPTY;
 	}
 
 	@Override
 	public ItemStack insertItem(int slot, ItemStack stack, boolean simulate) {		
-		return null;
+		return ItemStack.EMPTY;
 	}
 
 	@Override
 	public ItemStack extractItem(int slot, int amount, boolean simulate) {
-		return null;
+		return ItemStack.EMPTY;
 	}
 
 	@Override
 	public void setStackInSlot(int slot, ItemStack stack) {
-		if (stack != null) {
-			getHealthKits()[MathHelper.clamp_int(stack.getItemDamage(), 0, 2)] += stack.stackSize;
+		if (stack != ItemStack.EMPTY) {
+			getHealthKits()[MathHelper.clamp(stack.getItemDamage(), 0, 2)] += stack.getCount();
 		// 	TODO more kits
 		}
 	}
@@ -54,6 +54,11 @@ public class HealthBoxCapability implements IHealthBoxCapability {
 	@Override
 	public void setCooldown(int cooldown) {
 		this.cooldown = cooldown;
+	}
+
+	@Override
+	public int getSlotLimit(int slot) {
+		return 64;
 	}
 
 }

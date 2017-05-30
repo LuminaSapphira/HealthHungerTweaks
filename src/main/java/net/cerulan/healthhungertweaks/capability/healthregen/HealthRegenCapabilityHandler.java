@@ -61,7 +61,7 @@ public class HealthRegenCapabilityHandler {
 	
 	@SubscribeEvent
 	public void onPlayerLoggedIn(PlayerLoggedInEvent event) {
-		if(!event.player.worldObj.isRemote) {
+		if(!event.player.world.isRemote) {
 			EntityPlayerMP player = (EntityPlayerMP)event.player;
 			int ticksUntilStart = player.getCapability(HEALTH_REGEN, null).getTicksUntilRegenStart();
 			int ticksUntilRegen = player.getCapability(HEALTH_REGEN, null).getTicksUntilNextRegen();
@@ -79,7 +79,7 @@ public class HealthRegenCapabilityHandler {
 	
 	@SubscribeEvent
 	public void onEntityJoinWorld(EntityJoinWorldEvent event) {
-		if (event.getEntity() instanceof EntityPlayerMP && !event.getEntity().worldObj.isRemote) {
+		if (event.getEntity() instanceof EntityPlayerMP && !event.getEntity().world.isRemote) {
 			IHealthRegenCapability cap = event.getEntity().getCapability(HEALTH_REGEN, null);
 			int ticksUntilStart = cap.getTicksUntilRegenStart();
 			int ticksUntilRegen = cap.getTicksUntilNextRegen();

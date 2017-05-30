@@ -84,20 +84,19 @@ public class GuiHealthBox extends GuiContainer {
 		/*boolean unicodeFlag = this.fontRendererObj.getUnicodeFlag();
 		this.fontRendererObj.setUnicodeFlag(true);*/
 		
-		int fk1x = (wid3 - this.fontRendererObj.getStringWidth(String.valueOf(kits[0]))) / 2;
-		int fk2x = wid3 + (wid3 - this.fontRendererObj.getStringWidth(String.valueOf(kits[1]))) / 2;
-		int fk3x = 2 * wid3 + (wid3 - this.fontRendererObj.getStringWidth(String.valueOf(kits[2]))) / 2;
+		int fk1x = (wid3 - this.fontRenderer.getStringWidth(String.valueOf(kits[0]))) / 2;
+		int fk2x = wid3 + (wid3 - this.fontRenderer.getStringWidth(String.valueOf(kits[1]))) / 2;
+		int fk3x = 2 * wid3 + (wid3 - this.fontRenderer.getStringWidth(String.valueOf(kits[2]))) / 2;
 		
 		fk1x++;
 		fk2x++;
 		fk3x++;		
+		this.fontRenderer.drawString(String.valueOf(kits[0]), fk1x, 92f, 0, false);
+		this.fontRenderer.drawString(String.valueOf(kits[1]), fk2x, 92f, 0, false);
+		this.fontRenderer.drawString(String.valueOf(kits[2]), fk3x, 92f, 0, false);
 		
-		this.fontRendererObj.drawString(String.valueOf(kits[0]), fk1x, 92f, 0, false);
-		this.fontRendererObj.drawString(String.valueOf(kits[1]), fk2x, 92f, 0, false);
-		this.fontRendererObj.drawString(String.valueOf(kits[2]), fk3x, 92f, 0, false);
-		
-		int titleX = this.fontRendererObj.getStringWidth(titleText.getFormattedText());
-		this.fontRendererObj.drawString(titleText.getFormattedText(), (this.xSize - titleX) / 2, 8, 0);	
+		int titleX = this.fontRenderer.getStringWidth(titleText.getFormattedText());
+		this.fontRenderer.drawString(titleText.getFormattedText(), (this.xSize - titleX) / 2, 8, 0);	
 		
 		// Draw tooltip
 		
@@ -139,7 +138,7 @@ public class GuiHealthBox extends GuiContainer {
 		else if (isCtrlKeyDown()) {
 			amount = 10;
 		}
-		return MathHelper.clamp_int(amount, 0, amountForKit);
+		return MathHelper.clamp(amount, 0, amountForKit);
 	}
 	
 	private int getKitAtPoint(int mxGui, int myGui) {

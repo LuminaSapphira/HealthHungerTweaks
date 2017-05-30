@@ -11,10 +11,10 @@ public class ModItems {
 	public static ItemBase itemMedicalTools;
 	
 	public static void init() {
-		itemHealthKit = register(new ItemHealthKit("healthKit").setCreativeTab(HealthHungerTweaks.sidedProxy.creativeTab).setSubtypeAmount(3));
+		itemHealthKit = register(new ItemHealthKit("health_kit").setCreativeTab(HealthHungerTweaks.sidedProxy.creativeTab).setSubtypeAmount(3));
 		itemBandage = register(new ItemBase("bandage").setCreativeTab(HealthHungerTweaks.sidedProxy.creativeTab).setSubtypeAmount(2));
 		itemOintment = register(new ItemBase("ointment").setCreativeTab(HealthHungerTweaks.sidedProxy.creativeTab).setSubtypeAmount(2));
-		itemMedicalTools = register(new ItemBase("medicalTools").setCreativeTab(HealthHungerTweaks.sidedProxy.creativeTab));
+		itemMedicalTools = register(new ItemBase("medical_tools").setCreativeTab(HealthHungerTweaks.sidedProxy.creativeTab));
 	}
 
 	private static <T extends Item> T register(T item) {

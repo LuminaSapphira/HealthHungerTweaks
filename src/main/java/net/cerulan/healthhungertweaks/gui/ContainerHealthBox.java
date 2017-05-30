@@ -37,7 +37,7 @@ public class ContainerHealthBox extends Container {
 	
 	@Override
 	public ItemStack transferStackInSlot(EntityPlayer playerIn, int index) {
-		ItemStack previous = null;
+		ItemStack previous = ItemStack.EMPTY;
 	    Slot slot = (Slot) this.inventorySlots.get(index);
 
 	    if (slot != null && slot.getHasStack()) {
@@ -47,21 +47,22 @@ public class ContainerHealthBox extends Container {
 			if (index < 1) {
 				// From box to player (shouldn't occur)
 				if (!this.mergeItemStack(current, 1, 37, true))
-					return null;
+					return ItemStack.EMPTY;
 			} else {
 				// From player to box
 				if (!this.mergeItemStack(current, 0, 1, false))
-					return null;
+					return ItemStack.EMPTY;
 			}
 
-	        if (current.stackSize == 0)
-	            slot.putStack((ItemStack) null);
+	        if (current.getCount() == 0)
+	            slot.putStack(ItemStack.EMPTY);
 	        else
 	            slot.onSlotChanged();
 
-	        if (current.stackSize == previous.stackSize)
-	            return null;
-	        slot.onPickupFromSlot(playerIn, current);
+	        if (current.getCount() == previous.getCount())
+	            return ItemStack.EMPTY;
+	        //slot.onPickupFromSlot(playerIn, current);
+	        slot.onTake(playerIn, current);
 	    }
 	    return previous;
 	}

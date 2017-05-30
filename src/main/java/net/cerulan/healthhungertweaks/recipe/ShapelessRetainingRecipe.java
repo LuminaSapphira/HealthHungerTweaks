@@ -5,6 +5,7 @@ import java.util.Arrays;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.ShapelessRecipes;
+import net.minecraft.util.NonNullList;
 
 public abstract class ShapelessRetainingRecipe extends ShapelessRecipes {
 	
@@ -25,7 +26,7 @@ public abstract class ShapelessRetainingRecipe extends ShapelessRecipes {
 	 * return aitemstack;
 	 */
 	@Override
-	public abstract ItemStack[] getRemainingItems(InventoryCrafting inv);
+	public abstract NonNullList<ItemStack> getRemainingItems(InventoryCrafting inv);
     
 
 }

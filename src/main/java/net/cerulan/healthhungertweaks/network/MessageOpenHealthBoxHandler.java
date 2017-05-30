@@ -9,7 +9,7 @@ public class MessageOpenHealthBoxHandler implements IMessageHandler<MessageOpenH
 
 	@Override
 	public IMessage onMessage(MessageOpenHealthBox message, MessageContext ctx) {
-		ctx.getServerHandler().playerEntity.openGui(HealthHungerTweaks.instance, 0, ctx.getServerHandler().playerEntity.worldObj, 0, 0, 0);
+		ctx.getServerHandler().player.openGui(HealthHungerTweaks.instance, 0, ctx.getServerHandler().player.getEntityWorld(), 0, 0, 0);
 		return null;
 	}
 

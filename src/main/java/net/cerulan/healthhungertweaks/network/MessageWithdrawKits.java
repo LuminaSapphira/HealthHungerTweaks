@@ -23,17 +23,17 @@ public class MessageWithdrawKits implements IMessage {
 				IHealthBoxCapability healthbox = HealthHungerTweaks.sidedProxy.getPlayerEntity(ctx).getCapability(HealthBoxCapabilityHandler.HEALTH_BOX, null);
 				if (message.amount > 0) {
 					int[] kits = healthbox.getHealthKits();
-					int kitindex = MathHelper.clamp_int(message.kit, 0, 2);
-					int removeAmount = MathHelper.clamp_int(message.amount, 0, Math.min(kits[kitindex], 64));
+					int kitindex = MathHelper.clamp(message.kit, 0, 2);
+					int removeAmount = MathHelper.clamp(message.amount, 0, Math.min(kits[kitindex], 64));
 					kits[kitindex] = kits[kitindex] - removeAmount;
 					healthbox.setHealthKits(kits);
 
-					EntityPlayer ply = ctx.getServerHandler().playerEntity;
-					ply.worldObj.spawnEntityInWorld(new EntityItem(ply.worldObj, ply.posX, ply.posY, ply.posZ,
+					EntityPlayer ply = ctx.getServerHandler().player;
+					ply.world.spawnEntity(new EntityItem(ply.world, ply.posX, ply.posY, ply.posZ,
 							new ItemStack(ModItems.itemHealthKit, removeAmount, kitindex)));
 
 					HealthHungerPacketHandler.INSTANCE.sendTo(new MessageSyncHealthBox(healthbox.getHealthKits(), healthbox.getCooldown()),
-							ctx.getServerHandler().playerEntity);
+							ctx.getServerHandler().player);
 				}
 			});
 			return null;
