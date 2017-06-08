@@ -46,7 +46,7 @@ minecraft {
 dependencies {
 	
 	// AppleCore
-	deobfCompile "applecore:AppleCore:1.10.2-2.1.0:deobf"
+	deobfCompile "applecore:AppleCore:1.10.2-2.1.2:deobf"
 	
 	// JEI
 	deobfCompile "mezz.jei:jei_${mc_version}:${jei_version}:api"
