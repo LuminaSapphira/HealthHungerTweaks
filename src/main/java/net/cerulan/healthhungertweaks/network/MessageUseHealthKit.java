@@ -78,7 +78,7 @@ public class MessageUseHealthKit implements IMessage {
 					healAmount = MathHelper.clamp(healAmount, 0, pl.getMaxHealth() - pl.getHealth());
 					pl.heal(healAmount);
 					ITextComponent text = new TextComponentString(new TextComponentTranslation("healthkit.useHealthKit").getFormattedText()
-							.replace("${item}", new TextComponentTranslation(String.format("item.healthKit.%1$d.name", useKit)).getFormattedText()));
+							.replace("${item}", new TextComponentTranslation(String.format("item.health_kit.%1$d.name", useKit)).getFormattedText()));
 					text.getStyle().setColor(TextFormatting.AQUA);
 					pl.sendMessage(text);
 				}

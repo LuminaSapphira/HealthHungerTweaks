@@ -105,7 +105,7 @@ public class GuiHealthBox extends GuiContainer {
 		int kit = getKitAtPoint(mx, my);
 		if (kit != -1) { 
 			ITextComponent tool1 = new TextComponentString(new TextComponentTranslation("container.healthbox.tooltip1").getFormattedText()
-					.replace("${item}", new TextComponentTranslation(String.format("item.healthKit.%1$d.name", kit)).getFormattedText()));
+					.replace("${item}", new TextComponentTranslation(String.format("item.health_kit.%1$d.name", kit)).getFormattedText()));
 			tool1.getStyle().setColor(TextFormatting.AQUA);
 			
 			ITextComponent tool2 = new TextComponentString(new TextComponentTranslation("container.healthbox.tooltip2").getFormattedText()
