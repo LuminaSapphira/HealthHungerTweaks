@@ -109,29 +109,7 @@ public class HealthHungerHandler {
 			if (player.hasCapability(HealthRegenCapabilityHandler.HEALTH_REGEN, null)) {
 				IHealthRegenCapability cap = player.getCapability(HealthRegenCapabilityHandler.HEALTH_REGEN, null);
 				cap.setData(HealthHungerTweaks.instance.configHandler.getDelayUntilStart(), HealthHungerTweaks.instance.configHandler.getDelayBetweenTicks());
-				//HealthHungerTweaks.Log.info("Damage At: " + System.currentTimeMillis());
 			}
-			
-			
-			// Old Logic... was kinda buggy
-			/*float newHealth = event.getEntityLiving().getHealth() - event.getAmount(); 
-			if (newHealth > 0 && newHealth <= HealthHungerTweaks.instance.configHandler.getMaxUnrecoverableHealth()) {
-				event.getEntityLiving().removePotionEffect(HealthHungerTweaks.sidedProxy.potionMending);
-			}
-			else {
-				if (HealthHungerTweaks.instance.configHandler.damageMatchesList(event.getSource().getDamageType())) {
-					int duration = (int) event.getAmount() * 40;
-					PotionEffect currentEffect = event.getEntityLiving()
-							.getActivePotionEffect(HealthHungerTweaks.sidedProxy.potionMending);
-					if (currentEffect != null)
-						duration += currentEffect.getDuration();
-					event.getEntityLiving().addPotionEffect(
-							new PotionEffect(HealthHungerTweaks.sidedProxy.potionMending, duration, 0, false, true));
-				} else {
-					event.getEntityLiving().removePotionEffect(HealthHungerTweaks.sidedProxy.potionMending);
-				}
-			}*/
-			
 
 		}
 

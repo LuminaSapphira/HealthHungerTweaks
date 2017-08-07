@@ -1,0 +1,22 @@
+{
+  "result": {
+    "item": "healthhungertweaks:bandage",
+	"data": 0,
+	"count": 3
+  },
+  "ingredients": [
+	{
+		"type": "forge:ore_dict",
+		"ore": "stickWood"
+	},
+	{
+		"type": "forge:ore_dict",
+		"ore": "stickWood"
+	},
+	{
+		"type": "forge:ore_dict",
+		"ore": "stickWood"
+	}
+  ],
+  "type": "forge:ore_shapeless"
+}

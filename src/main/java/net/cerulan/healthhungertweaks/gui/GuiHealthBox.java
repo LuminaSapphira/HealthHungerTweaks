@@ -30,7 +30,7 @@ public class GuiHealthBox extends GuiContainer {
 	
 	EntityPlayer player;
 	public GuiHealthBox(EntityPlayer player) {		
-		super(new ContainerHealthBox(player));
+		super(new ContainerHealthBox(player));		
 		this.xSize = 176;
 		this.ySize = 195;
 		this.player = player;
@@ -39,6 +39,7 @@ public class GuiHealthBox extends GuiContainer {
 
 	@Override
 	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
+		this.drawDefaultBackground();
 		GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
         this.mc.getTextureManager().bindTexture(texture);
         int i = (this.width - this.xSize) / 2;

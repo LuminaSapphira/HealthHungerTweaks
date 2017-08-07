@@ -1,0 +1,6 @@
+{
+  "recipes": {
+    "basic_ointment": "net.cerulan.healthhungertweaks.recipe.BasicOintmentRecipeFactory",
+	"refined_ointment": "net.cerulan.healthhungertweaks.recipe.RefinedOintmentRecipeFactory"
+  }
+}

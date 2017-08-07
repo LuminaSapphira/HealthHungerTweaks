@@ -1,22 +1,10 @@
 package net.cerulan.healthhungertweaks.recipe;
 
-import net.cerulan.healthhungertweaks.item.ModItems;
-import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
-import net.minecraft.inventory.InventoryCrafting;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.NonNullList;
-import net.minecraftforge.fml.common.registry.GameRegistry;
-import net.minecraftforge.oredict.RecipeSorter;
-import net.minecraftforge.oredict.RecipeSorter.Category;
-import net.minecraftforge.oredict.ShapedOreRecipe;
-import net.minecraftforge.oredict.ShapelessOreRecipe;
-
 public class ModRecipes {
 
 	public static void init() {
 		//GameRegistry.addShapedRecipe(output, params)
-		class BasicOintmentRecipe extends ShapelessRetainingRecipe {
+		/*class BasicOintmentRecipe extends ShapelessRetainingRecipe {
 
 			public BasicOintmentRecipe(ItemStack output, ItemStack... inputList) {
 				super(output, inputList);
@@ -55,11 +43,8 @@ public class ModRecipes {
 				return remaining;
 			}
 			
-		}
-		
-		RecipeSorter.register("BasicOintmentRecipe", BasicOintmentRecipe.class, Category.SHAPELESS, "");
-		RecipeSorter.register("RefinedOintmentRecipe", RefinedOintmentRecipe.class, Category.SHAPELESS, "");
-		
+		}*/
+		/*
 		GameRegistry.addRecipe(new BasicOintmentRecipe(new ItemStack(ModItems.itemOintment, 2, 0), new ItemStack(Items.WHEAT_SEEDS, 1), new ItemStack(Items.WHEAT_SEEDS, 1), new ItemStack(Items.WHEAT_SEEDS, 1), new ItemStack(Items.BOWL, 1)));
 		GameRegistry.addRecipe(new BasicOintmentRecipe(new ItemStack(ModItems.itemOintment, 3, 0), new ItemStack(Blocks.CACTUS, 1), new ItemStack(Items.BOWL, 1)));
 		GameRegistry.addRecipe(new BasicOintmentRecipe(new ItemStack(ModItems.itemOintment, 3, 0), new ItemStack(Blocks.RED_FLOWER, 1), new ItemStack(Items.BOWL, 1)));
@@ -71,8 +56,10 @@ public class ModRecipes {
 		GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(ModItems.itemBandage, 3, 0), "stickWood", "stickWood", "stickWood"));
 		GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(ModItems.itemBandage, 3, 1), Blocks.WOOL, Items.PAPER));
 		GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(ModItems.itemHealthKit, 3, 0), Blocks.DIRT, Blocks.DIRT, Blocks.DIRT, new ItemStack(ModItems.itemBandage, 1, 0)));
-		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModItems.itemHealthKit, 3, 1), " L ", "wpw", " L ", 'L', "logWood", 'w', new ItemStack(ModItems.itemBandage, 1, 0), 'p', new ItemStack(ModItems.itemOintment, 1, 0) ));
-		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModItems.itemHealthKit, 3, 2), " M ", "bpb", " I ", 'M', ModItems.itemMedicalTools, 'I', "ingotIron", 'b', new ItemStack(ModItems.itemBandage, 1, 1), 'p', new ItemStack(ModItems.itemOintment, 1, 1) ));
+		ForgeRegistries.RECIPES.register(new ShapedOreRecipe(new ItemStack(ModItems.itemHealthKit, 3, 1), " L ", "wpw", " L ", 'L', "logWood", 'w', new ItemStack(ModItems.itemBandage, 1, 0), 'p', new ItemStack(ModItems.itemOintment, 1, 0) ));
+		ForgeRegistries.RECIPES.register(new ShapedOreRecipe(new ItemStack(ModItems.itemHealthKit, 3, 2), " M ", "bpb", " I ", 'M', ModItems.itemMedicalTools, 'I', "ingotIron", 'b', new ItemStack(ModItems.itemBandage, 1, 1), 'p', new ItemStack(ModItems.itemOintment, 1, 1) ));*/
+		
+		
 	}
 	
 }

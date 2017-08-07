@@ -1,7 +1,7 @@
 package net.cerulan.healthhungertweaks.item;
 import net.cerulan.healthhungertweaks.HealthHungerTweaks;
 import net.minecraft.item.Item;
-import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.fml.common.registry.ForgeRegistries;
 
 public class ModItems {
 
@@ -18,7 +18,7 @@ public class ModItems {
 	}
 
 	private static <T extends Item> T register(T item) {
-		GameRegistry.register(item);
+		ForgeRegistries.ITEMS.register(item);
 
 		if (item instanceof ItemBase) {
 			((ItemBase)item).registerItemModel();

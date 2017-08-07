@@ -1,0 +1,18 @@
+{
+  "result": {
+    "item": "healthhungertweaks:bandage",
+	"data": 1,
+	"count": 3
+  },
+  "ingredients": [
+	{
+		"item": "minecraft:wool",
+		"data": 32767
+	},
+	{
+		"type": "forge:ore_dict",
+		"ore": "paper"
+	}
+  ],
+  "type": "forge:ore_shapeless"
+}

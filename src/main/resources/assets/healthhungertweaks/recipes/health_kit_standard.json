@@ -1,0 +1,27 @@
+{
+  "result": {
+    "item": "healthhungertweaks:health_kit",
+	"data": 1,
+	"count": 3
+  },
+  "pattern": [
+    " L ",
+    "wpw",
+    " L "
+  ],
+  "type": "forge:ore_shaped",
+  "key": {
+    "L": {
+      "type": "forge:ore_dict",
+      "ore": "logWood"
+    },
+    "w": {
+      "item": "healthhungertweaks:bandage",
+	  "data": 0
+    },
+    "p": {
+      "item": "healthhungertweaks:ointment",
+      "data": 0
+    }
+  }
+}

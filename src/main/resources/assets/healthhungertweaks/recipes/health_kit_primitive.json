@@ -1,0 +1,26 @@
+{
+  "result": {
+    "item": "healthhungertweaks:health_kit",
+	"data": 0,	
+	"count": 3
+  },
+  "ingredients": [
+    {
+		"item": "healthhungertweaks:bandage",
+		"data": 0
+	},
+	{
+		"type": "forge:ore_dict",
+		"ore": "dirt"
+	},
+	{
+		"type": "forge:ore_dict",
+		"ore": "dirt"
+	},
+	{
+		"type": "forge:ore_dict",
+		"ore": "dirt"
+	}
+  ],
+  "type": "forge:ore_shapeless"
+}

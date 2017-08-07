@@ -5,7 +5,6 @@ import net.cerulan.healthhungertweaks.capability.healthregen.HealthRegenCapabili
 import net.cerulan.healthhungertweaks.gui.GuiHandler;
 import net.cerulan.healthhungertweaks.handler.HealthHungerHandler;
 import net.cerulan.healthhungertweaks.network.HealthHungerPacketHandler;
-import net.cerulan.healthhungertweaks.potion.PotionMending;
 import net.cerulan.healthhungertweaks.potion.PotionSatiated;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
@@ -14,12 +13,11 @@ import net.minecraft.util.IThreadListener;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
-import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.fml.common.registry.ForgeRegistries;
 
 public class CommonProxy {
 
 	public PotionSatiated potionSatiated;
-	public PotionMending potionMending;
 	public HealthHungerPacketHandler packetHandler;
 	
 	protected HealthHungerHandler handler; 
@@ -29,10 +27,8 @@ public class CommonProxy {
 	
 	public void preInit() {
 		potionSatiated = new PotionSatiated();
-		potionMending = new PotionMending();
 		
-		GameRegistry.register(potionSatiated);
-		GameRegistry.register(potionMending);
+		ForgeRegistries.POTIONS.register(potionSatiated);
 	}
 	
 	public void init() {

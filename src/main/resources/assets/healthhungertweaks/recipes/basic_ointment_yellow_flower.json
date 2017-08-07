@@ -1,0 +1,22 @@
+{
+	"type": "healthhungertweaks:basic_ointment",
+	"ingredients": [
+		{
+			"item": "minecraft:yellow_flower",
+			"data": 0
+		},
+		{
+			"item": "minecraft:bowl",
+			"data": 0
+		}
+	],
+	"retained_ingredients": [{
+		"item": "minecraft:bowl",
+		"data": 0
+	}],
+	"result": {
+		"item": "healthhungertweaks:ointment",
+		"count": 3,
+		"data": 0
+	}
+}

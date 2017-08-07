@@ -1,4 +1,4 @@
-package net.cerulan.healthhungertweaks.recipe;
+/*package net.cerulan.healthhungertweaks.recipe;
 
 import java.util.Arrays;
 
@@ -25,8 +25,9 @@ public abstract class ShapelessRetainingRecipe extends ShapelessRecipes {
 	 * 
 	 * return aitemstack;
 	 */
-	@Override
+	/*@Override
 	public abstract NonNullList<ItemStack> getRemainingItems(InventoryCrafting inv);
     
 
 }
+*/
