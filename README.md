@@ -1,5 +1,5 @@
 # Health and Hunger Tweaks
-### For Minecraft 1.12 (Forge 2428 / AppleCore 2.2.2)
+### For Minecraft 1.12 (Forge 2443 / AppleCore 2.2.2)
 Modifies the way Minecraft manages food and the corresponding health regeneration in the following ways:
  * Decreases hunger drain (1/2 normal rate)
  * Gives an effect (Satiated) to players when eating food that disables hunger drain for its duration
