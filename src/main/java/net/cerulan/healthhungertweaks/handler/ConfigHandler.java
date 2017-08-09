@@ -12,7 +12,6 @@ public class ConfigHandler {
 	private boolean doSatiation;
 	private int satiatedDuration;
 	private double exhaustionModifier;
-	private int maxUnrecoverableHealth;
 	private int kitCooldown;
 	
 	private int showCooldownMode;
@@ -23,6 +22,7 @@ public class ConfigHandler {
 	private int delayUntilStart;
 	private int delayBetweenTicks;
 	private int minimumHunger;
+	private int minimumThirst; // Integration with ToughAsNails
 	
 	
 	public void load() {
@@ -42,14 +42,14 @@ public class ConfigHandler {
 		
 		minimumHunger = config.get("mending", "minimumHunger", 6, "The minimum hunger (in half-shanks) necessary to be able to heal.").getInt();
 		
+		minimumThirst = config.get("mending", "minimumThirst", 6, "ToughAsNails integration: The minimum thirst (in half-drops) necessary to be able to heal. No effect if ToughAsNails is not installed.").getInt();
+		
 		kitCooldown = config.get("mending", "healthKitCooldown", 600, "The cooldown period (in ticks) while a player may not use a health kit after previously using one.").getInt();
 		
 		
 		
 		config.save();
 	}
-	
-	public int getMaxUnrecoverableHealth() { return maxUnrecoverableHealth; }
 	
 	public double getExhaustionModifier() { return exhaustionModifier; }
 	
@@ -78,6 +78,10 @@ public class ConfigHandler {
 
 	public int getMinimumHunger() {
 		return minimumHunger;
+	}
+	
+	public int getMinimumThirst() {
+		return minimumThirst;
 	}
 	
 }
