@@ -1,6 +1,7 @@
 {
   "homepage": "https://minecraft.curseforge.com/projects/health-and-hunger-tweaks",
   "1.12": {
+	"2.1.0-alpha1": "Added Tough as Nails integration",
 	"2.0.0-alpha1": "Updated to 1.12"
   },
   "1.11.2": {
@@ -11,7 +12,7 @@
     "1.0.0-beta2": "Fixed a few minor issues"
   },
   "promos": {
-	"1.12-latest": "2.0.0-alpha1",
+	"1.12-latest": "2.1.0-alpha1",
 	"1.11.2-latest": "2.0.0-alpha1",
     "1.10.2-recommended": "2.0.0-beta1",
     "1.10.2-latest": "2.0.0-beta1"
