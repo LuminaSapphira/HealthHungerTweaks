@@ -1,10 +1,11 @@
 package net.cerulan.healthhungertweaks.item;
 
-import net.cerulan.healthhungertweaks.HealthHungerTweaks;
+import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
+import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -29,14 +30,14 @@ public class ItemBase extends Item {
 		this.subtypes = amt;
 		return this;
 	}
-
+/*
 	public void registerItemModel() {
 		for (int i = 0; i < subtypes; i++) {
 			HealthHungerTweaks.sidedProxy.registerItemRenderer(this, i, name);
 		}
 		
 	}
-
+*/
 	@Override
 	public ItemBase setCreativeTab(CreativeTabs tab) {
 		super.setCreativeTab(tab);
@@ -46,8 +47,18 @@ public class ItemBase extends Item {
 	@SideOnly(Side.CLIENT)
 	@Override
 	public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> subItems) {
-		for (int i = 0; i < subtypes; i++) {
-			subItems.add(new ItemStack(this, 1, i));
+		if (this.isInCreativeTab(tab)) {
+			for (int i = 0; i < subtypes; i++) {
+				subItems.add(new ItemStack(this, 1, i));
+			}
 		}
 	}
+	
+	@SideOnly(Side.CLIENT)
+	public void initModel() {
+		for (int i = 0; i < subtypes; i++) {
+			ModelLoader.setCustomModelResourceLocation(this, i, new ModelResourceLocation(getRegistryName() + "." + i, "inventory"));
+		}
+	}
+		
 }
