@@ -34,7 +34,6 @@ public class HealthHungerTweaks
 		HealthHungerTweaks.Log.info("PreInitialization");
 		configHandler = new ConfigHandler(new Configuration(event.getSuggestedConfigurationFile()));
 		configHandler.load();
-        sidedProxy.preInit();
         ModItems.init();
     }
 	

@@ -5,6 +5,7 @@ import net.cerulan.healthhungertweaks.capability.healthbox.HealthBoxCapabilityHa
 import net.cerulan.healthhungertweaks.capability.healthbox.IHealthBoxCapability;
 import net.cerulan.healthhungertweaks.capability.healthregen.HealthRegenCapabilityHandler;
 import net.cerulan.healthhungertweaks.capability.healthregen.IHealthRegenCapability;
+import net.cerulan.healthhungertweaks.potion.ModPotions;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.potion.PotionEffect;
 import net.minecraftforge.common.capabilities.Capability;
@@ -47,7 +48,7 @@ public class HealthHungerHandler {
 	
 	@SubscribeEvent
 	public void allowExhaustion(ExhaustionEvent.AllowExhaustion event) {
-		if (event.player.isPotionActive(HealthHungerTweaks.sidedProxy.potionSatiated)) {
+		if (event.player.isPotionActive(ModPotions.satiated)) {
 			event.setResult(Result.DENY);
 		}
 		else {
@@ -64,7 +65,7 @@ public class HealthHungerHandler {
     public void onFoodEaten(FoodEvent.FoodEaten event) {
 		if (HealthHungerTweaks.instance.configHandler.shouldSate()) {
 			int ticks = event.foodValues.hunger * HealthHungerTweaks.instance.configHandler.getSatiatedDuration();
-			event.player.addPotionEffect(new PotionEffect(HealthHungerTweaks.sidedProxy.potionSatiated, ticks, 0, false, true));
+			event.player.addPotionEffect(new PotionEffect(ModPotions.satiated, ticks, 0, false, true));
 		}
 	}
 	
