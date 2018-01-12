@@ -22,9 +22,6 @@ public class ModItems {
 	@GameRegistry.ObjectHolder("healthhungertweaks:medical_tools")
 	public static ItemBase itemMedicalTools;
 	
-	public static void init() {
-	}
-	
 	@SubscribeEvent
 	public static void registerItems(RegistryEvent.Register<Item> event) {
 		event.getRegistry().register(new ItemHealthKit("health_kit").setCreativeTab(HealthHungerTweaks.sidedProxy.creativeTab).setSubtypeAmount(3));

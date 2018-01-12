@@ -23,7 +23,9 @@ public class ConfigHandler {
 	private int delayBetweenTicks;
 	private int minimumHunger;
 	private int minimumThirst; // Integration with ToughAsNails
-	
+	private boolean usePercent;
+	private double percentAmount;
+	private int staticAmount;
 	
 	public void load() {
 		showCooldownMode = config.get("client", "showCooldownMode", 2, "Sets the mode that determines how the health kit cooldown will be displayed. 0=Not At All, 1=Only Icon, 2=Icon + Time Remaining").getInt();
@@ -34,11 +36,11 @@ public class ConfigHandler {
 		doSatiation = config.get("satiated", "enableSatiated", true, "Toggles whether eating food gives a satiated effect that disabled food drain for the duration.").getBoolean();
 		satiatedDuration = config.get("satiated", "satiatedDuration", 600, "This value will be multipled to the food value of the food to get the duration (in ticks) of the satiated effect.").getInt();
 		
-		exhaustionModifier = config.get("exhaustion", "exhaustionModifier", 2.0, "An exhaustion modifier that will be multiplied to the default maximum exhausion. Higher values mean slower food drain.").getDouble();
+		exhaustionModifier = config.get("exhaustion", "exhaustionModifier", 1.0, "An exhaustion modifier that will be multiplied to the default maximum exhaustion. Higher values mean slower food drain.").getDouble();
 		
-		disableRegularRegen = config.get("mending", "disableRegularRegen", true, "Toggles whether regular regen (from food) should be disabled, and players must use health kits. Recommended if food is made easier.").getBoolean();
+		disableRegularRegen = config.get("mending", "disableRegularRegen", true, "Toggles whether regular regen (from food) should be disabled, and players must use health kits. Recommended if food is made easier. (This in itself also makes food easier as saturation will not be consumed to restore health).").getBoolean();
 		delayUntilStart = config.get("mending", "delayUntilStart", 200, "The delay (in ticks) before a player will begin to regenerate health. Negative values disable this functionality, forcing players to rely solely on health kits or potions.").getInt();
-		delayBetweenTicks = config.get("mending", "delayBetweenTicks", 10, "The delay (in ticks) between each half-heart restored.").getInt();
+		delayBetweenTicks = config.get("mending", "delayBetweenTicks", 10, "The delay (in ticks) between each regeneration.").getInt();
 		
 		minimumHunger = config.get("mending", "minimumHunger", 6, "The minimum hunger (in half-shanks) necessary to be able to heal.").getInt();
 		
@@ -46,6 +48,9 @@ public class ConfigHandler {
 		
 		kitCooldown = config.get("mending", "healthKitCooldown", 600, "The cooldown period (in ticks) while a player may not use a health kit after previously using one.").getInt();
 		
+		usePercent = config.get("mending", "usePercent", true, "Regeneration will heal for a percent of maximum health, rather that a flat value.").getBoolean();		
+		percentAmount = config.get("mending", "percentAmount", 0.05, "The percent of maximum health to regenerate each regeneration if usePercent is enabled.").getDouble();
+		staticAmount = config.get("mending", "staticAmount", 1, "The amount of half-hearts to heal each regeneration if usePercent is disabled.").getInt();
 		
 		
 		config.save();
@@ -84,4 +89,10 @@ public class ConfigHandler {
 		return minimumThirst;
 	}
 	
+	public boolean getUsePercent() {
+		return this.usePercent;
+	}
+	
+	public double getPercentAmount() { return this.percentAmount; }
+	public int getStaticAmount() { return this.staticAmount; }
 }

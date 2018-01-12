@@ -4,7 +4,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import net.cerulan.healthhungertweaks.handler.ConfigHandler;
-import net.cerulan.healthhungertweaks.item.ModItems;
 import net.cerulan.healthhungertweaks.recipe.ModRecipes;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.Mod;
@@ -34,7 +33,6 @@ public class HealthHungerTweaks
 		HealthHungerTweaks.Log.info("PreInitialization");
 		configHandler = new ConfigHandler(new Configuration(event.getSuggestedConfigurationFile()));
 		configHandler.load();
-        ModItems.init();
     }
 	
     @EventHandler

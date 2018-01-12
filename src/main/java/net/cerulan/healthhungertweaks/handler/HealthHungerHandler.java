@@ -21,7 +21,7 @@ import squeek.applecore.api.hunger.ExhaustionEvent;
 import squeek.applecore.api.hunger.HealthRegenEvent;
 import toughasnails.api.stat.capability.IThirst;
 
-public class HealthHungerHandler {
+public class HealthHungerHandler {	
 	
 	public HealthHungerHandler() {
 	}
@@ -96,7 +96,12 @@ public class HealthHungerHandler {
 					} else if (untilStart == 0 && untilNext == 0) {
 						untilNext = HealthHungerTweaks.instance.configHandler.getDelayBetweenTicks();
 						if (!event.player.world.isRemote && event.player.getHealth() < event.player.getMaxHealth()) {
-							event.player.heal(1f);
+							if (HealthHungerTweaks.instance.configHandler.getUsePercent()) {
+								event.player.heal((float)(HealthHungerTweaks.instance.configHandler.getPercentAmount() * event.player.getMaxHealth()));
+							}
+							else {
+								event.player.heal((float)(HealthHungerTweaks.instance.configHandler.getStaticAmount()));
+							}
 						}
 					}
 				} else {
