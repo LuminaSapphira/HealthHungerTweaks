@@ -64,6 +64,10 @@ public class HealthHungerHandler {
 	@SubscribeEvent
     public void onFoodEaten(FoodEvent.FoodEaten event) {
 		if (HealthHungerTweaks.instance.configHandler.shouldSate()) {
+			if (event == null || event.foodValues == null) {
+				HealthHungerTweaks.Log.fatal("Food values is null! This should not happen! Skipped applying Satiated buff!");
+				return;
+			}
 			int ticks = event.foodValues.hunger * HealthHungerTweaks.instance.configHandler.getSatiatedDuration();
 			event.player.addPotionEffect(new PotionEffect(ModPotions.satiated, ticks, 0, false, true));
 		}

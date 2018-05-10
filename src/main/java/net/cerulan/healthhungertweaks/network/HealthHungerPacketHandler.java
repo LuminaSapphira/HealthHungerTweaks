@@ -13,5 +13,6 @@ public class HealthHungerPacketHandler {
 		INSTANCE.registerMessage(MessageSyncHealthBox.MessageSyncHealthBoxHandler.class, MessageSyncHealthBox.class, 1, Side.CLIENT);
 		INSTANCE.registerMessage(MessageWithdrawKits.MessageWithdrawKitsHandler.class, MessageWithdrawKits.class, 2, Side.SERVER);
 		INSTANCE.registerMessage(MessageUseHealthKit.MessageUseHealthKitHandler.class, MessageUseHealthKit.class, 3, Side.SERVER);
+		INSTANCE.registerMessage(MessageSyncHealthRegen.MessageSyncHealthRegenHandler.class, MessageSyncHealthRegen.class, 4, Side.CLIENT);
 	}
 }
