@@ -22,17 +22,16 @@ public class MessageWithdrawKits implements IMessage {
 			HealthHungerTweaks.sidedProxy.getThreadFromContext(ctx).addScheduledTask(() -> {
 				IHealthBoxCapability healthbox = HealthHungerTweaks.sidedProxy.getPlayerEntity(ctx).getCapability(HealthBoxCapabilityHandler.HEALTH_BOX, null);
 				if (message.amount > 0) {
-					int[] kits = healthbox.getHealthKits();
-					int kitindex = MathHelper.clamp(message.kit, 0, 2);
-					int removeAmount = MathHelper.clamp(message.amount, 0, Math.min(kits[kitindex], 64));
-					kits[kitindex] = kits[kitindex] - removeAmount;
-					healthbox.setHealthKits(kits);
+					int kits = healthbox.getHealthKitCount();;
+					int removeAmount = MathHelper.clamp(message.amount, 0, Math.min(kits, 64));
+					kits -= removeAmount;
+					healthbox.setHealthKitCount(kits);
 
 					EntityPlayer ply = ctx.getServerHandler().player;
 					ply.world.spawnEntity(new EntityItem(ply.world, ply.posX, ply.posY, ply.posZ,
-							new ItemStack(ModItems.itemHealthKit, removeAmount, kitindex)));
+							new ItemStack(ModItems.itemHealthKit, removeAmount)));
 
-					HealthHungerPacketHandler.INSTANCE.sendTo(new MessageSyncHealthBox(healthbox.getHealthKits(), healthbox.getCooldown()),
+					HealthHungerPacketHandler.INSTANCE.sendTo(new MessageSyncHealthBox(healthbox.getHealthKitCount(), healthbox.getCooldown()),
 							ctx.getServerHandler().player);
 				}
 			});
@@ -41,24 +40,20 @@ public class MessageWithdrawKits implements IMessage {
 		
 	}
 	
-	private int kit = 0;
 	private int amount = 0;
 
 	public MessageWithdrawKits() {}
-	public MessageWithdrawKits(int kit, int amount) {
-		this.kit = kit;
+	public MessageWithdrawKits(int amount) {
 		this.amount = amount;
 	}
 	
 	@Override
 	public void fromBytes(ByteBuf buf) {
-		kit = buf.readInt();
 		amount = buf.readInt();
 	}
 
 	@Override
 	public void toBytes(ByteBuf buf) {
-		buf.writeInt(kit);
 		buf.writeInt(amount);
 	}
 

@@ -7,7 +7,6 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 import net.cerulan.healthhungertweaks.ModInfo;
-import net.minecraft.init.Items;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
@@ -55,7 +54,7 @@ public class RefinedOintmentRecipeFactory implements IRecipeFactory {
 				
 				for (Ingredient next : toRetain) {
 					if(next.apply(slot)) {
-						remaining.set(i, new ItemStack(Items.BUCKET, 1));
+						remaining.set(i, slot);
 						break;
 					}
 				}		

@@ -7,11 +7,12 @@ import net.minecraftforge.fml.relauncher.Side;
 
 public class HealthHungerPacketHandler {
 	public static final SimpleNetworkWrapper INSTANCE = NetworkRegistry.INSTANCE.newSimpleChannel(ModInfo.MODID);
+	public static int id = 1;
 	
 	public HealthHungerPacketHandler() {
-		INSTANCE.registerMessage(MessageOpenHealthBoxHandler.class, MessageOpenHealthBox.class, 0, Side.SERVER);
-		INSTANCE.registerMessage(MessageSyncHealthBox.MessageSyncHealthBoxHandler.class, MessageSyncHealthBox.class, 1, Side.CLIENT);
-		INSTANCE.registerMessage(MessageWithdrawKits.MessageWithdrawKitsHandler.class, MessageWithdrawKits.class, 2, Side.SERVER);
-		INSTANCE.registerMessage(MessageUseHealthKit.MessageUseHealthKitHandler.class, MessageUseHealthKit.class, 3, Side.SERVER);
+		INSTANCE.registerMessage(MessageOpenHealthBoxHandler.class, MessageOpenHealthBox.class, id++, Side.SERVER);
+		INSTANCE.registerMessage(MessageSyncHealthBox.MessageSyncHealthBoxHandler.class, MessageSyncHealthBox.class, id++, Side.CLIENT);
+		INSTANCE.registerMessage(MessageWithdrawKits.MessageWithdrawKitsHandler.class, MessageWithdrawKits.class, id++, Side.SERVER);
+		INSTANCE.registerMessage(MessageUseHealthKit.MessageUseHealthKitHandler.class, MessageUseHealthKit.class, id++, Side.SERVER);
 	}
 }

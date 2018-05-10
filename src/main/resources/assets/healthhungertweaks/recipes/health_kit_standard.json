@@ -1,27 +1,22 @@
 {
   "result": {
-    "item": "healthhungertweaks:health_kit",
-	"data": 1,
-	"count": 3
+    "item": "healthhungertweaks:health_kit_regen",
+    "data": 0,
+    "count": 4
   },
-  "pattern": [
-    " L ",
-    "wpw",
-    " L "
-  ],
-  "type": "forge:ore_shaped",
-  "key": {
-    "L": {
-      "type": "forge:ore_dict",
-      "ore": "logWood"
+  "type": "forge:ore_shapeless",
+  "ingredients": [
+    {
+      "item": "healthhungertweaks:refined_ointment",
+      "data": 1
     },
-    "w": {
-      "item": "healthhungertweaks:bandage",
-	  "data": 0
+    {
+      "item": "healthhungertweaks:cloth_bandage",
+      "data": 1
     },
-    "p": {
-      "item": "healthhungertweaks:ointment",
+    {
+      "item": "healthhungertweaks:medical_tools",
       "data": 0
     }
-  }
+  ]
 }

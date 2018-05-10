@@ -1,19 +1,22 @@
 {
-	"type": "healthhungertweaks:refined_ointment",
-	"ingredients": [{
-			"item": "minecraft:dye",
-			"data": 2
-		},
-		{
-			"item": "minecraft:water_bucket"
-		}
-	],
-	"retained_ingredients": [{
-		"item": "minecraft:water_bucket"
-	}],
-	"result": {
-		"item": "healthhungertweaks:ointment",
-		"count": 4,
-		"data": 1
-	}
+  "type": "healthhungertweaks:refined_ointment",
+  "ingredients": [
+    {
+      "item": "minecraft:dye",
+      "data": 2
+    },
+    {
+      "item": "minecraft:water_bucket"
+    }
+  ],
+  "retained_ingredients": [
+    {
+      "item": "minecraft:water_bucket"
+    }
+  ],
+  "result": {
+    "item": "healthhungertweaks:refined_ointment",
+    "count": 1,
+    "data": 1
+  }
 }

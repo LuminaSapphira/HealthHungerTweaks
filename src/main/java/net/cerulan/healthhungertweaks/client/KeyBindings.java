@@ -8,8 +8,7 @@ import net.cerulan.healthhungertweaks.network.MessageUseHealthKit;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.gameevent.TickEvent.ClientTickEvent;
-import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
+import net.minecraftforge.fml.common.gameevent.InputEvent.KeyInputEvent;
 
 public class KeyBindings {
     public static KeyBinding openHealthBox;
@@ -22,9 +21,7 @@ public class KeyBindings {
         useHealthKit = new KeyBinding("key.usehealthkit", Keyboard.KEY_C, "key.category.healthhungertweaks");
         ClientRegistry.registerKeyBinding(useHealthKit);
     }
-    
-    boolean released_useHealthKit = true;
-
+    /*
     @SubscribeEvent    
 	public void playerTick(ClientTickEvent event) {
 		if(event.phase == Phase.START) {
@@ -33,11 +30,23 @@ public class KeyBindings {
 			}
 			if (useHealthKit.isKeyDown() && released_useHealthKit) {
 				released_useHealthKit = false;
-				HealthHungerPacketHandler.INSTANCE.sendToServer(new MessageUseHealthKit(-1));
+				HealthHungerPacketHandler.INSTANCE.sendToServer(new MessageUseHealthKit());
 			}
 			else if (!useHealthKit.isKeyDown()) {
 				released_useHealthKit = true;
 			}
 		}
+	}*/
+    
+    @SubscribeEvent    
+	public void keyEvent(KeyInputEvent event) {
+		//if(event.phase == Phase.START) {
+			if (openHealthBox.isPressed()) {				
+				HealthHungerPacketHandler.INSTANCE.sendToServer(new MessageOpenHealthBox());
+			}
+			if (useHealthKit.isPressed()) {
+				HealthHungerPacketHandler.INSTANCE.sendToServer(new MessageUseHealthKit());
+			}
+		//}
 	}
 }

@@ -6,7 +6,9 @@ public interface IHealthBoxCapability extends IItemHandlerModifiable {
 
 	int getCooldown();
 	void setCooldown(int cooldown);
-	int[] getHealthKits();
-	void setHealthKits(int[] health);
+	//int[] getHealthKits();
+	int getHealthKitCount();
+	void setHealthKitCount(int count);
+	//void setHealthKits(int[] health);
 	
 }

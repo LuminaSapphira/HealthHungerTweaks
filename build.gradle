@@ -21,7 +21,7 @@ repositories {
 	
 }
 
-version = "3.0.0"
+version = "3.0.0-beta"
 group= "net.cerulan.healthhungertweaks"
 archivesBaseName = "healthhungertweaks" + "-" + project.mc_version
 
@@ -31,7 +31,7 @@ compileJava {
 }
 
 minecraft {
-    version = "1.12-14.21.1.2443"
+    version = "1.12.2-14.23.3.2675"
     runDir = "run"
     
     // the mappings can be changed at any time, and must be in the following format.
@@ -39,14 +39,14 @@ minecraft {
     // stable_#            stables are built at the discretion of the MCP team.
     // Use non-default mappings at your own risk. they may not allways work.
     // simply re-run your setup task after changing the mappings to update your workspace.
-    mappings = "snapshot_20170729"
+    mappings = "snapshot_20180203"
     // makeObfSourceJar = false // an Srg named sources jar is made by default. uncomment this to disable.
 }
 
 dependencies {
 	
 	// AppleCore
-	deobfCompile "applecore:AppleCore:1.12-2.2.2:deobf"
+	deobfCompile "applecore:AppleCore:1.12.2-3.1.1:deobf"
 	
 	// JEI
 	deobfCompile "mezz.jei:jei_${mc_version}:${jei_version}:api"

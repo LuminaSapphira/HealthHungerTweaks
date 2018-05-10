@@ -1,0 +1,14 @@
+{
+  "result": {
+    "item": "healthhungertweaks:health_kit_regen",
+    "data": 0,
+    "count": 1
+  },
+  "type": "forge:ore_shapeless",
+  "ingredients": [
+    {
+      "item": "healthhungertweaks:health_kit_regen",
+      "data": 32767
+    }
+  ]
+}
