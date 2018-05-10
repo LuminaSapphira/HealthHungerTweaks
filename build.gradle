@@ -21,7 +21,7 @@ repositories {
 	
 }
 
-version = "3.0.0"
+version = "2.1.2"
 group= "net.cerulan.healthhungertweaks"
 archivesBaseName = "healthhungertweaks" + "-" + project.mc_version
 
