@@ -9,7 +9,7 @@ import net.minecraftforge.fml.common.Mod.Instance;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 
-@Mod(modid = ModInfo.MODID, version = ModInfo.VERSION, dependencies="required-after:applecore@[3.1.1,)", updateJSON="https://raw.githubusercontent.com/CerulanLumina/HealthHungerTweaks/master/versions.json")
+@Mod(modid = ModInfo.MODID, version = ModInfo.VERSION, dependencies="required-after:applecore@[3.2.0,)", updateJSON="https://raw.githubusercontent.com/CerulanLumina/HealthHungerTweaks/master/versions.json")
 public class HealthHungerTweaks
 {
 	
