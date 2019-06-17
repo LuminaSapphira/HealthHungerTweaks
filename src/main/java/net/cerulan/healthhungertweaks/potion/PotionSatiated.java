@@ -3,14 +3,20 @@ package net.cerulan.healthhungertweaks.potion;
 import net.cerulan.healthhungertweaks.ModInfo;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class PotionSatiated extends Potion {
 	private ResourceLocation icon = new ResourceLocation(ModInfo.MODID, "textures/icons/potionsatiated.png");
+
+	@GameRegistry.ObjectHolder("minecraft:hunger")
+	private static Potion hunger;
+
 	public PotionSatiated() {
 		super(false, 0);
 		setPotionName("potion.satiated");
@@ -32,5 +38,16 @@ public class PotionSatiated extends Potion {
 	public boolean shouldRenderHUD(PotionEffect effect) {
 		return false;
 	}
-	
+
+	@Override
+	public boolean isReady(int duration, int amplifier) {
+		return true;
+	}
+
+	@Override
+	public void performEffect(EntityLivingBase entityLivingBaseIn, int amplifier) {
+		if (entityLivingBaseIn.getActivePotionEffect(hunger) != null) {
+			entityLivingBaseIn.removeActivePotionEffect(this);
+		}
+	}
 }
