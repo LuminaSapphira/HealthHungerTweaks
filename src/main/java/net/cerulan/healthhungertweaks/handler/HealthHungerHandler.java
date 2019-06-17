@@ -17,6 +17,7 @@ import net.minecraftforge.fml.common.eventhandler.Event.Result;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.PlayerTickEvent;
+import squeek.applecore.api.AppleCoreAPI;
 import squeek.applecore.api.food.FoodEvent;
 import squeek.applecore.api.hunger.ExhaustionEvent;
 import squeek.applecore.api.hunger.HealthRegenEvent;
@@ -29,13 +30,11 @@ public class HealthHungerHandler {
 
 	@SubscribeEvent
 	public void allowNormalRegen(HealthRegenEvent.AllowRegen event) {
-		//event.setResult(Result.DENY);
 		allowRegen(event);
 	}
 	
 	@SubscribeEvent
 	public void allowSaturatedRegen(HealthRegenEvent.AllowSaturatedRegen event) {
-		//event.setResult(Result.DENY);
 		allowRegen(event);
 	}
 	
@@ -99,7 +98,12 @@ public class HealthHungerHandler {
 					} else if (untilStart == 0 && untilNext > 0) {
 						untilNext--;
 					} else if (untilStart == 0 && untilNext == 0) {
+						int maxHunger = AppleCoreAPI.accessor.getMaxHunger(event.player);
+						int missing = maxHunger - event.player.getFoodStats().getFoodLevel();
 						untilNext = HHTConfigCommon.mending.delayBetween;
+						if (HHTConfigCommon.mending.scaling.useScalingDelay) {
+							untilNext += HHTConfigCommon.mending.scaling.additionalDelayPerHungerMissing * missing;
+						}
 						if (!event.player.world.isRemote && event.player.getHealth() < event.player.getMaxHealth()) {
 							if (HHTConfigCommon.mending.usePercent) {
 								event.player.heal((float)(HHTConfigCommon.mending.percentAmount * event.player.getMaxHealth()));
@@ -124,7 +128,13 @@ public class HealthHungerHandler {
 			EntityPlayer player = (EntityPlayer)event.getEntity(); 
 			if (player.hasCapability(HealthRegenCapabilityHandler.HEALTH_REGEN, null)) {
 				IHealthRegenCapability cap = player.getCapability(HealthRegenCapabilityHandler.HEALTH_REGEN, null);
-				cap.setData(HHTConfigCommon.mending.delayUntilStart, HHTConfigCommon.mending.delayBetween);
+				int maxHunger = AppleCoreAPI.accessor.getMaxHunger(player);
+				int missing = maxHunger - player.getFoodStats().getFoodLevel();
+				int untilNext = HHTConfigCommon.mending.delayBetween;
+				if (HHTConfigCommon.mending.scaling.useScalingDelay) {
+					untilNext += HHTConfigCommon.mending.scaling.additionalDelayPerHungerMissing * missing;
+				}
+				cap.setData(HHTConfigCommon.mending.delayUntilStart, untilNext);
 			}
 
 		}

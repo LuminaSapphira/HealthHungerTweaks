@@ -40,7 +40,7 @@ public class HHTConfigCommon {
 		
 		@Config.Comment("The cooldown period (in ticks) while a player may not use a health kit after previously using one.")
 		@Config.RangeInt(min = 0)
-		public int healthKitCooldown = 100;
+		public int healthKitCooldown = 300;
 		
 		@Config.Comment("The minimum hunger point value necessary to be able to heal with the mending effect.")
 		@Config.RangeInt(min = 0, max = 20)
@@ -63,6 +63,18 @@ public class HHTConfigCommon {
 		@Config.Comment("Set to false to disable the health kit system.")
 		@Config.RequiresMcRestart
 		public boolean enableHealthKit = true;
+
+		@Config.Comment("Alternate regeneration mechanics using hunger to scale regen delay")
+		@Config.Name("scaling")
+		public Scaling scaling = new Scaling();
+
+		public static class Scaling {
+			@Config.Comment("Switches regeneration to use a scaling delay depending on hunger")
+			public boolean useScalingDelay = false;
+
+			@Config.Comment("The additional delay in ticks per hunger point missing added to I:delayBetween")
+			public int additionalDelayPerHungerMissing = 5;
+		}
 	}
 	
 	public static class Satiation {
