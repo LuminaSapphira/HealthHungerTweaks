@@ -10,5 +10,11 @@
       "item": "healthhungertweaks:health_kit_regen",
       "data": 32767
     }
+  ],
+  "conditions": [
+    {
+      "type": "healthhungertweaks:config",
+      "key": "health_kit"
+    }
   ]
 }

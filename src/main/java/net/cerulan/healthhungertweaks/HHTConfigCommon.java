@@ -2,7 +2,7 @@ package net.cerulan.healthhungertweaks;
 
 import net.minecraftforge.common.config.Config;
 
-@Config(modid = "healthhungertweaks", name="cerulan/healthhungertweaks_common.cfg")
+@Config(modid = "healthhungertweaks", name="cerulan/healthhungertweaks_common")
 public class HHTConfigCommon {
 	
 	@Config.Name("exhaustion")
@@ -12,6 +12,10 @@ public class HHTConfigCommon {
 	@Config.Name("mending")
 	@Config.Comment("Settings related to mending, the health regeneration after taking damage. Set delayUntilStart to -1 to disable this functionality.")
 	public static Mending mending = new Mending();
+
+	@Config.Name("satiation")
+	@Config.Comment("Settings related to satiation, the disabled hunger drain after eating")
+	public static Satiation satiation = new Satiation();
 	
 	
 	public static class Exhaustion {
@@ -55,6 +59,10 @@ public class HHTConfigCommon {
 		
 		@Config.Comment("Regeneration will restore a percentage of maximum health, rather than a flat value.")
 		public boolean usePercent = true;
+
+		@Config.Comment("Set to false to disable the health kit system.")
+		@Config.RequiresMcRestart
+		public boolean enableHealthKit = true;
 	}
 	
 	public static class Satiation {

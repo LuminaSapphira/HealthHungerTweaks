@@ -14,5 +14,11 @@
       "ore": "paper"
     }
   ],
-  "type": "forge:ore_shapeless"
+  "type": "forge:ore_shapeless",
+  "conditions": [
+    {
+      "type": "healthhungertweaks:config",
+      "key": "health_kit"
+    }
+  ]
 }

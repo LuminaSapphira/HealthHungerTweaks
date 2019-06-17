@@ -10,5 +10,11 @@
       "item": "healthhungertweaks:refined_ointment",
       "data": 32767
     }
+  ],
+  "conditions": [
+    {
+      "type": "healthhungertweaks:config",
+      "key": "health_kit"
+    }
   ]
 }

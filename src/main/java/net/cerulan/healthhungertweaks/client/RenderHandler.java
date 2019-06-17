@@ -31,7 +31,7 @@ public class RenderHandler {
 		ScaledResolution scaledRes = event.getResolution();
 		if (event.getType() == ElementType.HELMET) {
 			// Screen Darken
-			if (HealthHungerTweaks.instance.configHandler.shouldScreenDarkenWhenInjured()) {
+			if (HHTConfigClient.client.screenDarken) {
 				
 				GlStateManager.disableDepth();
 				GlStateManager.depthMask(false);
@@ -66,17 +66,17 @@ public class RenderHandler {
 				IHealthBoxCapability boxCap = this.mc.player.getCapability(HealthBoxCapabilityHandler.HEALTH_BOX,
 						null);
 				if (boxCap.getCooldown() > 0) {
-					int x = HealthHungerTweaks.instance.configHandler.getCooldownX();
-					int y = HealthHungerTweaks.instance.configHandler.getCooldownY();
+					int x = HHTConfigClient.client.cooldownX;
+					int y = HHTConfigClient.client.cooldownY;
 
-					if (HealthHungerTweaks.instance.configHandler.getShowCooldownMode() >= 1) {
+					if (HHTConfigClient.client.showCooldownMode >= 1) {
 						// Icon
 						this.mc.getTextureManager().bindTexture(kitCooldown);
 						Gui.drawModalRectWithCustomSizedTexture(x, y, 0, 0, 16, 16, 16, 16);
 						x += 16 + 5;
 						this.mc.getTextureManager().bindTexture(Gui.ICONS);
 					}
-					if (HealthHungerTweaks.instance.configHandler.getShowCooldownMode() == 2) {
+					if (HHTConfigClient.client.showCooldownMode == 2) {
 						this.mc.ingameGUI.drawString(this.mc.fontRenderer, String.valueOf(boxCap.getCooldown() / 20 + 1),
 								x, y + ((16 - this.mc.fontRenderer.FONT_HEIGHT) / 2), Color.WHITE.getRGB());
 						this.mc.getTextureManager().bindTexture(Gui.ICONS);

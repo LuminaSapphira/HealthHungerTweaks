@@ -1,5 +1,6 @@
 package net.cerulan.healthhungertweaks.client;
 
+import net.cerulan.healthhungertweaks.HHTConfigCommon;
 import org.lwjgl.input.Keyboard;
 
 import net.cerulan.healthhungertweaks.network.HealthHungerPacketHandler;
@@ -15,38 +16,24 @@ public class KeyBindings {
     public static KeyBinding useHealthKit;
 
     public static void load() {
-    	openHealthBox = new KeyBinding("key.openhealthbox", Keyboard.KEY_GRAVE, "key.category.healthhungertweaks");
-        ClientRegistry.registerKeyBinding(openHealthBox);
-        
-        useHealthKit = new KeyBinding("key.usehealthkit", Keyboard.KEY_C, "key.category.healthhungertweaks");
-        ClientRegistry.registerKeyBinding(useHealthKit);
-    }
-    /*
-    @SubscribeEvent    
-	public void playerTick(ClientTickEvent event) {
-		if(event.phase == Phase.START) {
-			if (openHealthBox.isKeyDown()) {				
-				HealthHungerPacketHandler.INSTANCE.sendToServer(new MessageOpenHealthBox());
-			}
-			if (useHealthKit.isKeyDown() && released_useHealthKit) {
-				released_useHealthKit = false;
-				HealthHungerPacketHandler.INSTANCE.sendToServer(new MessageUseHealthKit());
-			}
-			else if (!useHealthKit.isKeyDown()) {
-				released_useHealthKit = true;
-			}
+    	if (HHTConfigCommon.mending.enableHealthKit) {
+			openHealthBox = new KeyBinding("key.openhealthbox", Keyboard.KEY_GRAVE, "key.category.healthhungertweaks");
+			ClientRegistry.registerKeyBinding(openHealthBox);
+
+			useHealthKit = new KeyBinding("key.usehealthkit", Keyboard.KEY_C, "key.category.healthhungertweaks");
+			ClientRegistry.registerKeyBinding(useHealthKit);
 		}
-	}*/
+    }
     
     @SubscribeEvent    
 	public void keyEvent(KeyInputEvent event) {
-		//if(event.phase == Phase.START) {
-			if (openHealthBox.isPressed()) {				
+		if (HHTConfigCommon.mending.enableHealthKit) {
+			if (openHealthBox.isPressed()) {
 				HealthHungerPacketHandler.INSTANCE.sendToServer(new MessageOpenHealthBox());
 			}
 			if (useHealthKit.isPressed()) {
 				HealthHungerPacketHandler.INSTANCE.sendToServer(new MessageUseHealthKit());
 			}
-		//}
+		}
 	}
 }

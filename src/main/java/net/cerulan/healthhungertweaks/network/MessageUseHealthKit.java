@@ -1,6 +1,7 @@
 package net.cerulan.healthhungertweaks.network;
 
 import io.netty.buffer.ByteBuf;
+import net.cerulan.healthhungertweaks.HHTConfigCommon;
 import net.cerulan.healthhungertweaks.HealthHungerTweaks;
 import net.cerulan.healthhungertweaks.capability.healthbox.HealthBoxCapabilityHandler;
 import net.cerulan.healthhungertweaks.capability.healthbox.IHealthBoxCapability;
@@ -21,6 +22,7 @@ public class MessageUseHealthKit implements IMessage {
 
 		@Override
 		public IMessage onMessage(MessageUseHealthKit message, MessageContext ctx) {
+			if (!HHTConfigCommon.mending.enableHealthKit) return null;
 			HealthHungerTweaks.sidedProxy.getThreadFromContext(ctx).addScheduledTask(() -> {
 				EntityPlayer pl = ctx.getServerHandler().player;
 				IHealthBoxCapability healthbox = pl.getCapability(HealthBoxCapabilityHandler.HEALTH_BOX, null);
@@ -29,7 +31,7 @@ public class MessageUseHealthKit implements IMessage {
 				if (healthbox.getCooldown() == 0) {
 					kits--;
 					healthbox.setHealthKitCount(kits);
-					healthbox.setCooldown(HealthHungerTweaks.instance.configHandler.getHealthKitCooldown());
+					healthbox.setCooldown(HHTConfigCommon.mending.healthKitCooldown);
 					HealthHungerPacketHandler.INSTANCE.sendTo(new MessageSyncHealthBox(healthbox.getHealthKitCount(), healthbox.getCooldown()),
 							ctx.getServerHandler().player);
 					

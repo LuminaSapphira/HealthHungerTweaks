@@ -10,5 +10,11 @@
       "data": 32767
     }
   ],
-  "type": "forge:ore_shapeless"
+  "type": "forge:ore_shapeless",
+  "conditions": [
+    {
+      "type": "healthhungertweaks:config",
+      "key": "health_kit"
+    }
+  ]
 }

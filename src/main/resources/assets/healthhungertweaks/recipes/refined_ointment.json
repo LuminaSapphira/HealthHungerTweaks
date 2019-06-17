@@ -1,5 +1,8 @@
 {
-  "type": "healthhungertweaks:refined_ointment",
+  "result": {
+    "item": "healthhungertweaks:refined_ointment",
+    "count": 1
+  },
   "ingredients": [
     {
       "item": "minecraft:dye",
@@ -9,14 +12,11 @@
       "item": "minecraft:water_bucket"
     }
   ],
-  "retained_ingredients": [
+  "type": "forge:ore_shapeless",
+  "conditions": [
     {
-      "item": "minecraft:water_bucket"
+      "type": "healthhungertweaks:config",
+      "key": "health_kit"
     }
-  ],
-  "result": {
-    "item": "healthhungertweaks:refined_ointment",
-    "count": 1,
-    "data": 1
-  }
+  ]
 }

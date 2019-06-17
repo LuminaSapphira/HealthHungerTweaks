@@ -18,5 +18,11 @@
       "item": "healthhungertweaks:medical_tools",
       "data": 0
     }
+  ],
+  "conditions": [
+    {
+      "type": "healthhungertweaks:config",
+      "key": "health_kit"
+    }
   ]
 }

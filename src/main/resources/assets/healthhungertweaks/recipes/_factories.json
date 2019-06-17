@@ -1,5 +1,5 @@
 {
-  "recipes": {
-    "refined_ointment": "net.cerulan.healthhungertweaks.recipe.RefinedOintmentRecipeFactory"
+  "conditions": {
+    "config": "net.cerulan.healthhungertweaks.recipe.ConfigConditionFactory"
   }
 }
