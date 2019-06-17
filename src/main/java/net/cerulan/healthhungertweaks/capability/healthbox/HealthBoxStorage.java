@@ -1,9 +1,7 @@
 package net.cerulan.healthhungertweaks.capability.healthbox;
 
-import net.cerulan.healthhungertweaks.HealthHungerTweaks;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagIntArray;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.Capability.IStorage;
@@ -14,7 +12,9 @@ public class HealthBoxStorage implements IStorage<IHealthBoxCapability> {
 	public NBTBase writeNBT(Capability<IHealthBoxCapability> capability, IHealthBoxCapability instance,
 			EnumFacing side) {
 		NBTTagCompound nbt = new NBTTagCompound();
-		nbt.setIntArray("kits", instance.getHealthKits());
+		//TODO clean
+		//nbt.setIntArray("kits", instance.getHealthKits());
+		nbt.setInteger("kit_count", instance.getHealthKitCount());
 		nbt.setInteger("cooldown", instance.getCooldown());
 		return nbt;
 	}
@@ -23,29 +23,23 @@ public class HealthBoxStorage implements IStorage<IHealthBoxCapability> {
 	public void readNBT(Capability<IHealthBoxCapability> capability, IHealthBoxCapability instance, EnumFacing side,
 			NBTBase nbt) {
 		
-		// Check if cap data is new or old
 		if (nbt instanceof NBTTagCompound) {
-			int[] kits = ((NBTTagCompound) nbt).getIntArray("kits");
-			try {
-				System.arraycopy(kits, 0, instance.getHealthKits(), 0, 3);
-			} catch (Exception ex) {
-				HealthHungerTweaks.Log.info("Error occurred when reading Health Box data.");
-				ex.printStackTrace();
+			NBTTagCompound nbtt = (NBTTagCompound)nbt;
+			// Check if cap data is new or old
+			int newCount = 0;
+			if (nbtt.hasKey("kits")) {
+				// Old
+				int[] kits = nbtt.getIntArray("kits");
+				newCount = kits[0] + kits[1] + kits[2];
 			}
+			if (nbtt.hasKey("kit_count")) {
+				// new
+				newCount = nbtt.getInteger("kit_count");
+			}
+			instance.setHealthKitCount(newCount);
 			int cooldown = ((NBTTagCompound) nbt).getInteger("cooldown");
 			instance.setCooldown(cooldown);
 			
-		}
-		// if old, convert to new.
-		else if (nbt instanceof NBTTagIntArray) {
-			try {
-				NBTTagIntArray ia = ((NBTTagIntArray) nbt);
-				System.arraycopy(ia.getIntArray(), 0, instance.getHealthKits(), 0, 3);
-				instance.setCooldown(0);
-			} catch (Exception ex) {
-				HealthHungerTweaks.Log.info("Error occurred when reading Health Box data.");
-				ex.printStackTrace();
-			}
 		}
 
 	}

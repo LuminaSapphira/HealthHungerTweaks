@@ -1,15 +1,14 @@
 package net.cerulan.healthhungertweaks.capability.healthbox;
 
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.math.MathHelper;
 
 public class HealthBoxCapability implements IHealthBoxCapability {
 
-	int[] healthKits = new int[] { 0, 0, 0 };
+	int healthKits = 0;
 	int cooldown = 0;
 	
 	@Override
-	public int[] getHealthKits() {
+	public int getHealthKitCount() {
 		return healthKits;
 	}
 
@@ -36,13 +35,13 @@ public class HealthBoxCapability implements IHealthBoxCapability {
 	@Override
 	public void setStackInSlot(int slot, ItemStack stack) {
 		if (stack != ItemStack.EMPTY) {
-			getHealthKits()[MathHelper.clamp(stack.getItemDamage(), 0, 2)] += stack.getCount();
+			healthKits += stack.getCount();
 		// 	TODO more kits
 		}
 	}
 
 	@Override
-	public void setHealthKits(int[] health) {
+	public void setHealthKitCount(int health) {
 		this.healthKits = health;
 	}
 

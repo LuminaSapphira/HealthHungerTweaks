@@ -20,11 +20,6 @@ public class ItemBase extends Item {
 		setRegistryName(name);
 	}
 	
-	@Override
-	public String getUnlocalizedName(ItemStack stack) {
-		return super.getUnlocalizedName(stack) + "." + stack.getMetadata();
-	}
-	
 	public ItemBase setSubtypeAmount(int amt) {
 		this.setHasSubtypes(true);
 		this.subtypes = amt;
@@ -56,9 +51,9 @@ public class ItemBase extends Item {
 	
 	@SideOnly(Side.CLIENT)
 	public void initModel() {
-		for (int i = 0; i < subtypes; i++) {
-			ModelLoader.setCustomModelResourceLocation(this, i, new ModelResourceLocation(getRegistryName() + "." + i, "inventory"));
-		}
+		ModelLoader.setCustomModelResourceLocation(this, 0, new ModelResourceLocation(getRegistryName(), "inventory"));
+		ModelLoader.setCustomModelResourceLocation(this, 1, new ModelResourceLocation(getRegistryName(), "inventory"));
+		ModelLoader.setCustomModelResourceLocation(this, 2, new ModelResourceLocation(getRegistryName(), "inventory"));
 	}
 		
 }

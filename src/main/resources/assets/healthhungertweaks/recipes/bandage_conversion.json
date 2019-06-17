@@ -6,12 +6,8 @@
   },
   "ingredients": [
     {
-      "item": "minecraft:wool",
+      "item": "healthhungertweaks:cloth_bandage",
       "data": 32767
-    },
-    {
-      "type": "forge:ore_dict",
-      "ore": "paper"
     }
   ],
   "type": "forge:ore_shapeless",

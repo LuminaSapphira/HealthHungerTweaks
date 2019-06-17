@@ -1,5 +1,6 @@
 package net.cerulan.healthhungertweaks.handler;
 
+import net.cerulan.healthhungertweaks.HHTConfigCommon;
 import net.cerulan.healthhungertweaks.HealthHungerTweaks;
 import net.cerulan.healthhungertweaks.capability.healthbox.HealthBoxCapabilityHandler;
 import net.cerulan.healthhungertweaks.capability.healthbox.IHealthBoxCapability;
@@ -16,6 +17,7 @@ import net.minecraftforge.fml.common.eventhandler.Event.Result;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.PlayerTickEvent;
+import squeek.applecore.api.AppleCoreAPI;
 import squeek.applecore.api.food.FoodEvent;
 import squeek.applecore.api.hunger.ExhaustionEvent;
 import squeek.applecore.api.hunger.HealthRegenEvent;
@@ -28,18 +30,16 @@ public class HealthHungerHandler {
 
 	@SubscribeEvent
 	public void allowNormalRegen(HealthRegenEvent.AllowRegen event) {
-		//event.setResult(Result.DENY);
 		allowRegen(event);
 	}
 	
 	@SubscribeEvent
 	public void allowSaturatedRegen(HealthRegenEvent.AllowSaturatedRegen event) {
-		//event.setResult(Result.DENY);
 		allowRegen(event);
 	}
 	
 	private void allowRegen(HealthRegenEvent event) {
-		if (HealthHungerTweaks.instance.configHandler.shouldDisableRegularRegen()) {
+		if (HHTConfigCommon.mending.disableRegularRegen) {
 			event.setResult(Result.DENY);
 		}
 	}
@@ -58,17 +58,17 @@ public class HealthHungerHandler {
 	
 	@SubscribeEvent
 	public void getMaxExhaustion(ExhaustionEvent.GetMaxExhaustion event) {
-		event.maxExhaustionLevel *= HealthHungerTweaks.instance.configHandler.getExhaustionModifier();
+		event.maxExhaustionLevel *= HHTConfigCommon.exhaustion.exhaustionModifier;
 	}
 	
 	@SubscribeEvent
     public void onFoodEaten(FoodEvent.FoodEaten event) {
-		if (HealthHungerTweaks.instance.configHandler.shouldSate()) {
+		if (HHTConfigCommon.satiation.enableSatiated) {
 			if (event == null || event.foodValues == null) {
 				HealthHungerTweaks.Log.fatal("Food values is null! This should not happen! Skipped applying Satiated buff!");
 				return;
 			}
-			int ticks = event.foodValues.hunger * HealthHungerTweaks.instance.configHandler.getSatiatedDuration();
+			int ticks = event.foodValues.hunger * HHTConfigCommon.satiation.satiatedDuration;
 			event.player.addPotionEffect(new PotionEffect(ModPotions.satiated, ticks, 0, false, true));
 		}
 	}
@@ -90,26 +90,31 @@ public class HealthHungerHandler {
 
 				int untilStart = hRegenCap.getTicksUntilRegenStart();
 				int untilNext = hRegenCap.getTicksUntilNextRegen();
-				if (event.player.getFoodStats().getFoodLevel() >= HealthHungerTweaks.instance.configHandler.getMinimumHunger()
-						&& (!Loader.isModLoaded("toughasnails") || getThirst(event.player) >= HealthHungerTweaks.instance.configHandler.getMinimumThirst()) // Tough as Nails Integration
+				if (event.player.getFoodStats().getFoodLevel() >= HHTConfigCommon.mending.minimumHunger
+						&& (!Loader.isModLoaded("toughasnails") || getThirst(event.player) >= HHTConfigCommon.mending.minimumThirst) // Tough as Nails Integration
 						&& event.player.getHealth() < event.player.getMaxHealth()) {
 					if (untilStart > 0) {
 						untilStart--;
 					} else if (untilStart == 0 && untilNext > 0) {
 						untilNext--;
 					} else if (untilStart == 0 && untilNext == 0) {
-						untilNext = HealthHungerTweaks.instance.configHandler.getDelayBetweenTicks();
+						int maxHunger = AppleCoreAPI.accessor.getMaxHunger(event.player);
+						int missing = maxHunger - event.player.getFoodStats().getFoodLevel();
+						untilNext = HHTConfigCommon.mending.delayBetween;
+						if (HHTConfigCommon.mending.scaling.useScalingDelay) {
+							untilNext += HHTConfigCommon.mending.scaling.additionalDelayPerHungerMissing * missing;
+						}
 						if (!event.player.world.isRemote && event.player.getHealth() < event.player.getMaxHealth()) {
-							if (HealthHungerTweaks.instance.configHandler.getUsePercent()) {
-								event.player.heal((float)(HealthHungerTweaks.instance.configHandler.getPercentAmount() * event.player.getMaxHealth()));
+							if (HHTConfigCommon.mending.usePercent) {
+								event.player.heal((float)(HHTConfigCommon.mending.percentAmount * event.player.getMaxHealth()));
 							}
 							else {
-								event.player.heal((float)(HealthHungerTweaks.instance.configHandler.getStaticAmount()));
+								event.player.heal((float)(HHTConfigCommon.mending.staticAmount));
 							}
 						}
 					}
 				} else {
-					untilStart = HealthHungerTweaks.instance.configHandler.getDelayUntilStart();
+					untilStart = HHTConfigCommon.mending.delayUntilStart;
 				}
 				hRegenCap.setData(untilStart, untilNext);
 			}
@@ -123,7 +128,13 @@ public class HealthHungerHandler {
 			EntityPlayer player = (EntityPlayer)event.getEntity(); 
 			if (player.hasCapability(HealthRegenCapabilityHandler.HEALTH_REGEN, null)) {
 				IHealthRegenCapability cap = player.getCapability(HealthRegenCapabilityHandler.HEALTH_REGEN, null);
-				cap.setData(HealthHungerTweaks.instance.configHandler.getDelayUntilStart(), HealthHungerTweaks.instance.configHandler.getDelayBetweenTicks());
+				int maxHunger = AppleCoreAPI.accessor.getMaxHunger(player);
+				int missing = maxHunger - player.getFoodStats().getFoodLevel();
+				int untilNext = HHTConfigCommon.mending.delayBetween;
+				if (HHTConfigCommon.mending.scaling.useScalingDelay) {
+					untilNext += HHTConfigCommon.mending.scaling.additionalDelayPerHungerMissing * missing;
+				}
+				cap.setData(HHTConfigCommon.mending.delayUntilStart, untilNext);
 			}
 
 		}

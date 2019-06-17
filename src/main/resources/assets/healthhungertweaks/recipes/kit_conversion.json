@@ -1,20 +1,16 @@
 {
   "result": {
-    "item": "healthhungertweaks:cloth_bandage",
+    "item": "healthhungertweaks:health_kit_regen",
     "data": 0,
     "count": 1
   },
+  "type": "forge:ore_shapeless",
   "ingredients": [
     {
-      "item": "minecraft:wool",
+      "item": "healthhungertweaks:health_kit_regen",
       "data": 32767
-    },
-    {
-      "type": "forge:ore_dict",
-      "ore": "paper"
     }
   ],
-  "type": "forge:ore_shapeless",
   "conditions": [
     {
       "type": "healthhungertweaks:config",

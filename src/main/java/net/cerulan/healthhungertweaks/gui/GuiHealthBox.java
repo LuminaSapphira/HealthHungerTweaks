@@ -22,8 +22,9 @@ import net.minecraft.util.text.TextFormatting;
 public class GuiHealthBox extends GuiContainer {
 	
 	private static final ResourceLocation texture = new ResourceLocation(ModInfo.MODID, "textures/gui/container/guihealthbox.png");
-	private static final ResourceLocation k1 = new ResourceLocation(ModInfo.MODID, "textures/items/healthkit_primitive.png");
-	private static final ResourceLocation k2 = new ResourceLocation(ModInfo.MODID, "textures/items/healthkit_basic.png");
+	// TODO clean
+	//private static final ResourceLocation k1 = new ResourceLocation(ModInfo.MODID, "textures/items/healthkit_primitive.png");
+	//private static final ResourceLocation k2 = new ResourceLocation(ModInfo.MODID, "textures/items/healthkit_basic.png");
 	private static final ResourceLocation k3 = new ResourceLocation(ModInfo.MODID, "textures/items/healthkit_standard.png");
 	
 	private TextComponentTranslation titleText;
@@ -55,12 +56,12 @@ public class GuiHealthBox extends GuiContainer {
 	
 	int k1x, k2x, k3x;
 	int ky;
-	int[] kits;
+	int kits;
 	ArrayList<String> strs = new ArrayList<String>();
 	@Override
 	protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
 		strs.clear();
-		kits = this.player.getCapability(HealthBoxCapabilityHandler.HEALTH_BOX, null).getHealthKits();			
+		kits = this.player.getCapability(HealthBoxCapabilityHandler.HEALTH_BOX, null).getHealthKitCount();			
 		
 		int wid3 = this.xSize / 3;
 		k1x = (wid3 - 32) / 2;
@@ -72,29 +73,31 @@ public class GuiHealthBox extends GuiContainer {
 		k1x++;
 		k2x++;
 		k3x++;
-		
+		//TODO clean
+		/*
 		this.mc.getTextureManager().bindTexture(k1);		
-		drawModalRectWithCustomSizedTexture(k1x, ky, 0, 0, 32, 32, 32f, 32f);
-		
-		this.mc.getTextureManager().bindTexture(k2);		
-		drawModalRectWithCustomSizedTexture(k2x, ky, 0, 0, 32, 32, 32f, 32f);
+		drawModalRectWithCustomSizedTexture(k1x, ky, 0, 0, 32, 32, 32f, 32f);*/
 		
 		this.mc.getTextureManager().bindTexture(k3);		
-		drawModalRectWithCustomSizedTexture(k3x, ky, 0, 0, 32, 32, 32f, 32f);
+		drawModalRectWithCustomSizedTexture(k2x, ky, 0, 0, 32, 32, 32f, 32f);
+		
+		//TODO clean
+		/*this.mc.getTextureManager().bindTexture(k3);		
+		drawModalRectWithCustomSizedTexture(k3x, ky, 0, 0, 32, 32, 32f, 32f);*/
 
 		/*boolean unicodeFlag = this.fontRendererObj.getUnicodeFlag();
 		this.fontRendererObj.setUnicodeFlag(true);*/
 		
-		int fk1x = (wid3 - this.fontRenderer.getStringWidth(String.valueOf(kits[0]))) / 2;
-		int fk2x = wid3 + (wid3 - this.fontRenderer.getStringWidth(String.valueOf(kits[1]))) / 2;
-		int fk3x = 2 * wid3 + (wid3 - this.fontRenderer.getStringWidth(String.valueOf(kits[2]))) / 2;
+		//int fk1x = (wid3 - this.fontRenderer.getStringWidth(String.valueOf(kits[0]))) / 2;
+		int fk2x = wid3 + (wid3 - this.fontRenderer.getStringWidth(String.valueOf(kits))) / 2;
+		//int fk3x = 2 * wid3 + (wid3 - this.fontRenderer.getStringWidth(String.valueOf(kits[2]))) / 2;
 		
-		fk1x++;
+		//fk1x++;
 		fk2x++;
-		fk3x++;		
-		this.fontRenderer.drawString(String.valueOf(kits[0]), fk1x, 92f, 0, false);
-		this.fontRenderer.drawString(String.valueOf(kits[1]), fk2x, 92f, 0, false);
-		this.fontRenderer.drawString(String.valueOf(kits[2]), fk3x, 92f, 0, false);
+		//fk3x++;		
+		//this.fontRenderer.drawString(String.valueOf(kits[0]), fk1x, 92f, 0, false);
+		this.fontRenderer.drawString(String.valueOf(kits), fk2x, 92f, 0, false);
+		//this.fontRenderer.drawString(String.valueOf(kits[2]), fk3x, 92f, 0, false);
 		
 		int titleX = this.fontRenderer.getStringWidth(titleText.getFormattedText());
 		this.fontRenderer.drawString(titleText.getFormattedText(), (this.xSize - titleX) / 2, 8, 0);	
@@ -103,18 +106,17 @@ public class GuiHealthBox extends GuiContainer {
 		
 		int mx = mouseX - this.guiLeft;
 		int my = mouseY - this.guiTop;
-		int kit = getKitAtPoint(mx, my);
-		if (kit != -1) { 
+		if (getKitAtPoint(mx, my)) { 
 			ITextComponent tool1 = new TextComponentString(new TextComponentTranslation("container.healthbox.tooltip1").getFormattedText()
-					.replace("${item}", new TextComponentTranslation(String.format("item.health_kit.%1$d.name", kit)).getFormattedText()));
+					.replace("${item}", new TextComponentTranslation(String.format("item.health_kit_regen.name")).getFormattedText()));
 			tool1.getStyle().setColor(TextFormatting.AQUA);
 			
 			ITextComponent tool2 = new TextComponentString(new TextComponentTranslation("container.healthbox.tooltip2").getFormattedText()
-					.replace("${amount}", String.format("%1$d", kits[kit])));
+					.replace("${amount}", String.format("%1$d", kits)));
 			tool2.getStyle().setColor(TextFormatting.GRAY);
 			
 			ITextComponent tool3 = new TextComponentString(new TextComponentTranslation("container.healthbox.tooltip3").getFormattedText()
-					.replace("${removeamt}", String.format("%1$d", getRemoveAmountForKit(kits[kit]))));
+					.replace("${removeamt}", String.format("%1$d", getRemoveAmountForKit(kits))));
 			tool3.getStyle().setColor(TextFormatting.GRAY);
 			
 			ITextComponent tool4 = new TextComponentTranslation("container.healthbox.tooltip4");
@@ -131,7 +133,12 @@ public class GuiHealthBox extends GuiContainer {
 		//this.fontRendererObj.setUnicodeFlag(unicodeFlag);
 	}
 	
-	private int getRemoveAmountForKit(int amountForKit) {
+	/**
+	 * Gets how many kits to remove clamped to the available number of kits
+	 * @param availableKits
+	 * @return
+	 */
+	private int getRemoveAmountForKit(int availableKits) {
 		int amount = 1;
 		if (isShiftKeyDown()) {
 			amount = 64;
@@ -139,22 +146,17 @@ public class GuiHealthBox extends GuiContainer {
 		else if (isCtrlKeyDown()) {
 			amount = 10;
 		}
-		return MathHelper.clamp(amount, 0, amountForKit);
+		return MathHelper.clamp(amount, 0, availableKits);
 	}
 	
-	private int getKitAtPoint(int mxGui, int myGui) {
-		if (mxGui >= k1x && mxGui <= k1x + 32 && myGui >= ky && myGui <= ky + 32) {
-			return 0;
-		}
-		else if (mxGui >= k2x && mxGui <= k2x + 32 && myGui >= ky && myGui <= ky + 32) {
-			return 1;
-		}
-		else if (mxGui >= k3x && mxGui <= k3x + 32 && myGui >= ky && myGui <= ky + 32) {
-			return 2;
-		}
-		else {
-			return -1;
-		}
+	/**
+	 * Gets whether the cursor is hovering over a kit
+	 * @param mxGui
+	 * @param myGui
+	 * @return
+	 */
+	private boolean getKitAtPoint(int mxGui, int myGui) {
+		return (mxGui >= k2x && mxGui <= k2x + 32 && myGui >= ky && myGui <= ky + 32);
 	}
 	
 	@Override
@@ -163,21 +165,19 @@ public class GuiHealthBox extends GuiContainer {
 		
 		int mx = mouseX - this.guiLeft, my = mouseY - this.guiTop;		
 		if (mouseButton == 0) {
-			int kit = getKitAtPoint(mx, my);
-			if (kit != -1) {
-				int rmv = getRemoveAmountForKit(kits[kit]);
+			if (getKitAtPoint(mx, my)) {
+				int rmv = getRemoveAmountForKit(kits);
 				if (rmv > 0) {
-					HealthHungerTweaks.Log.info(String.format("Requesting to withdraw %1$d from kit %2$d", rmv, kit));
-					HealthHungerPacketHandler.INSTANCE.sendToServer(new MessageWithdrawKits(kit, rmv));
+					HealthHungerTweaks.Log.info(String.format("Requesting to withdraw %1$d kits", rmv));
+					HealthHungerPacketHandler.INSTANCE.sendToServer(new MessageWithdrawKits(rmv));
 				}
 			}
 		}
 		
 		if (mouseButton == 1) {
-			int kit = getKitAtPoint(mx, my);
-			if (kit != -1) {
-				HealthHungerTweaks.Log.info(String.format("Requesting to use kit %1$d", kit));
-				HealthHungerPacketHandler.INSTANCE.sendToServer(new MessageUseHealthKit(kit));
+			if (getKitAtPoint(mx, my)) {
+				HealthHungerTweaks.Log.info(String.format("Requesting to use health kit"));
+				HealthHungerPacketHandler.INSTANCE.sendToServer(new MessageUseHealthKit());
 			}
 		}
 	}

@@ -1,5 +1,6 @@
 package net.cerulan.healthhungertweaks.network;
 
+import net.cerulan.healthhungertweaks.HHTConfigCommon;
 import net.cerulan.healthhungertweaks.HealthHungerTweaks;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
@@ -9,6 +10,7 @@ public class MessageOpenHealthBoxHandler implements IMessageHandler<MessageOpenH
 
 	@Override
 	public IMessage onMessage(MessageOpenHealthBox message, MessageContext ctx) {
+		if (!HHTConfigCommon.mending.enableHealthKit) return null;
 		ctx.getServerHandler().player.openGui(HealthHungerTweaks.instance, 0, ctx.getServerHandler().player.getEntityWorld(), 0, 0, 0);
 		return null;
 	}

@@ -88,7 +88,7 @@ public class HealthRegenCapabilityHandler {
 	}
 	
 	public void register() {
-		CapabilityManager.INSTANCE.register(IHealthRegenCapability.class, new HealthRegenCapability.HealthRegenStorage(), HealthRegenCapability.class);
+		CapabilityManager.INSTANCE.register(IHealthRegenCapability.class, new HealthRegenCapability.HealthRegenStorage(), HealthRegenCapability::new);
 	}
 	
 	

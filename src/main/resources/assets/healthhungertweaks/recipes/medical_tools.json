@@ -1,20 +1,26 @@
 {
   "result": {
     "item": "healthhungertweaks:medical_tools",
-	"count": 1
+    "count": 1
   },
   "ingredients": [
     {
-		"item": "minecraft:shears"
-	},
-	{
-		"type": "forge:ore_dict",
-		"ore": "ingotIron"
-	},
-	{
-		"type": "forge:ore_dict",
-		"ore": "ingotIron"
-	}
+      "item": "minecraft:shears"
+    },
+    {
+      "type": "forge:ore_dict",
+      "ore": "ingotIron"
+    },
+    {
+      "type": "forge:ore_dict",
+      "ore": "ingotIron"
+    }
   ],
-  "type": "forge:ore_shapeless"
+  "type": "forge:ore_shapeless",
+  "conditions": [
+    {
+      "type": "healthhungertweaks:config",
+      "key": "health_kit"
+    }
+  ]
 }
