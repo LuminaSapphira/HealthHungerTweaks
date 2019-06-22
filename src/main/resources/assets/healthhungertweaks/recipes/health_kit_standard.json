@@ -1,4 +1,4 @@
-{
+{    "data": 0,
   "result": {
     "item": "healthhungertweaks:health_kit_regen",
     "data": 0,
@@ -7,16 +7,13 @@
   "type": "forge:ore_shapeless",
   "ingredients": [
     {
-      "item": "healthhungertweaks:refined_ointment",
-      "data": 1
+      "item": "healthhungertweaks:refined_ointment"
     },
     {
-      "item": "healthhungertweaks:cloth_bandage",
-      "data": 1
+      "item": "healthhungertweaks:cloth_bandage"
     },
     {
-      "item": "healthhungertweaks:medical_tools",
-      "data": 0
+      "item": "healthhungertweaks:medical_tools"
     }
   ],
   "conditions": [
