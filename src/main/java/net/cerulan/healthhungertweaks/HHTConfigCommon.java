@@ -47,9 +47,9 @@ public class HHTConfigCommon {
 		public int minimumHunger = 6;
 		
 		@Config.Comment("ToughAsNails integration: The minimum thirst point value necessary to be able to heal. No effect if ToughAsNails is not installed.")		
-		public int minimumThirst = 16;
+		public int minimumThirst = 6;
 		
-		@Config.Comment("The percent (0 - 1 = 0% - 100%) of maximum health to restore each regeneration if usePercent is enabled.")
+		@Config.Comment("The percent (0.0 - 1.0 = 0% - 100%) of maximum health to restore each regeneration if usePercent is enabled.")
 		@Config.RangeDouble(min = 0.01, max = 1)
 		public double percentAmount = 0.05;
 		
@@ -74,6 +74,27 @@ public class HHTConfigCommon {
 
 			@Config.Comment("The additional delay in ticks per hunger point missing added to I:delayBetween")
 			public int additionalDelayPerHungerMissing = 5;
+		}
+
+
+		@Config.Comment("Settings controlling the regeneration health kit. These settings are separate from the general mending effect.")
+		@Config.Name("regenKit")
+		public RegenKit regenKit = new RegenKit();
+		public static class RegenKit {
+			@Config.Comment("Delay in ticks between each regeneration.")
+			@Config.RangeInt(min = 0)
+			public int delayBetween = 10;
+
+			@Config.Comment("The percent (0.0 - 1.0 = 0% - 100%) of maximum health to restore each regeneration if usePercent is enabled.")
+			@Config.RangeDouble(min = 0.01, max = 1)
+			public double percentAmount = 0.05;
+
+			@Config.Comment("The amount of health points to restore each regeneration if usePercent is disabled.")
+			@Config.RangeDouble(min = 0)
+			public double staticAmount = 1;
+
+			@Config.Comment("Regeneration will restore a percentage of maximum health, rather than a flat value.")
+			public boolean usePercent = true;
 		}
 	}
 	

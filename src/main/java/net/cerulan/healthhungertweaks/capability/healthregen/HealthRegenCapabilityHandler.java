@@ -65,7 +65,8 @@ public class HealthRegenCapabilityHandler {
 			EntityPlayerMP player = (EntityPlayerMP)event.player;
 			int ticksUntilStart = player.getCapability(HEALTH_REGEN, null).getTicksUntilRegenStart();
 			int ticksUntilRegen = player.getCapability(HEALTH_REGEN, null).getTicksUntilNextRegen();
-			HealthHungerPacketHandler.INSTANCE.sendTo(new MessageSyncHealthRegen(ticksUntilStart, ticksUntilRegen), player);
+			boolean kitRegen = player.getCapability(HEALTH_REGEN, null).isKitRegen();
+			HealthHungerPacketHandler.INSTANCE.sendTo(new MessageSyncHealthRegen(ticksUntilStart, ticksUntilRegen, kitRegen), player);
 		}
 	}
 	
@@ -83,7 +84,8 @@ public class HealthRegenCapabilityHandler {
 			IHealthRegenCapability cap = event.getEntity().getCapability(HEALTH_REGEN, null);
 			int ticksUntilStart = cap.getTicksUntilRegenStart();
 			int ticksUntilRegen = cap.getTicksUntilNextRegen();
-			HealthHungerPacketHandler.INSTANCE.sendTo(new MessageSyncHealthRegen(ticksUntilStart, ticksUntilRegen), (EntityPlayerMP)event.getEntity());
+			boolean kitRegen = cap.isKitRegen();
+			HealthHungerPacketHandler.INSTANCE.sendTo(new MessageSyncHealthRegen(ticksUntilStart, ticksUntilRegen, kitRegen), (EntityPlayerMP)event.getEntity());
 		}
 	}
 	

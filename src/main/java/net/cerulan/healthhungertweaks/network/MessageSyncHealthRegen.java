@@ -19,7 +19,7 @@ public class MessageSyncHealthRegen implements IMessage{
 				EntityPlayer pl = HealthHungerTweaks.sidedProxy.getPlayerEntity(ctx);
 				IHealthRegenCapability cap = pl.getCapability(HealthRegenCapabilityHandler.HEALTH_REGEN, null);
 				cap.setData(message.untilStart, message.untilNext);
-				
+				cap.setKitRegen(message.kitRegen);
 			});
 			return null;
 		}
@@ -27,20 +27,23 @@ public class MessageSyncHealthRegen implements IMessage{
 	}
 	
 	private int untilStart, untilNext;
+	private boolean kitRegen;
 	
 	public MessageSyncHealthRegen() {
 		
 	}
 	
-	public MessageSyncHealthRegen(int untilStart, int untilNext) {
+	public MessageSyncHealthRegen(int untilStart, int untilNext, boolean kitRegen) {
 		this.untilStart = untilStart;
 		this.untilNext = untilNext;
+		this.kitRegen = kitRegen;
 	}
 
 	@Override
 	public void fromBytes(ByteBuf buf) {
 		this.untilStart = buf.readInt();
 		this.untilNext = buf.readInt();
+		this.kitRegen = buf.readBoolean();
 		
 	}
 
@@ -48,6 +51,7 @@ public class MessageSyncHealthRegen implements IMessage{
 	public void toBytes(ByteBuf buf) {
 		buf.writeInt(untilStart);
 		buf.writeInt(untilNext);
+		buf.writeBoolean(kitRegen);
 	}
 
 }

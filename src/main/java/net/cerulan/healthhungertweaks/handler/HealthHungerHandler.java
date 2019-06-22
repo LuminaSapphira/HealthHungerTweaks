@@ -90,33 +90,56 @@ public class HealthHungerHandler {
 
 				int untilStart = hRegenCap.getTicksUntilRegenStart();
 				int untilNext = hRegenCap.getTicksUntilNextRegen();
-				if (event.player.getFoodStats().getFoodLevel() >= HHTConfigCommon.mending.minimumHunger
-						&& (!Loader.isModLoaded("toughasnails") || getThirst(event.player) >= HHTConfigCommon.mending.minimumThirst) // Tough as Nails Integration
-						&& event.player.getHealth() < event.player.getMaxHealth()) {
-					if (untilStart > 0) {
-						untilStart--;
-					} else if (untilStart == 0 && untilNext > 0) {
-						untilNext--;
-					} else if (untilStart == 0 && untilNext == 0) {
-						int maxHunger = AppleCoreAPI.accessor.getMaxHunger(event.player);
-						int missing = maxHunger - event.player.getFoodStats().getFoodLevel();
-						untilNext = HHTConfigCommon.mending.delayBetween;
-						if (HHTConfigCommon.mending.scaling.useScalingDelay) {
-							untilNext += HHTConfigCommon.mending.scaling.additionalDelayPerHungerMissing * missing;
+				boolean kitRegen = hRegenCap.isKitRegen();
+
+				if (event.player.getHealth() < event.player.getMaxHealth()) {
+					if (kitRegen) {
+						if (untilNext > 0) untilNext--;
+						else if (untilNext == 0) {
+							HHTConfigCommon.Mending.RegenKit regenKitConfig = HHTConfigCommon.mending.regenKit;
+							healPlayer(event.player, regenKitConfig.usePercent, regenKitConfig.percentAmount, regenKitConfig.staticAmount);
+							untilNext = regenKitConfig.delayBetween;
 						}
-						if (!event.player.world.isRemote && event.player.getHealth() < event.player.getMaxHealth()) {
-							if (HHTConfigCommon.mending.usePercent) {
-								event.player.heal((float)(HHTConfigCommon.mending.percentAmount * event.player.getMaxHealth()));
+					}
+					else if (event.player.getFoodStats().getFoodLevel() >= HHTConfigCommon.mending.minimumHunger
+							&& (!Loader.isModLoaded("toughasnails") || getThirst(event.player) >= HHTConfigCommon.mending.minimumThirst) // Tough as Nails Integration
+					) {
+
+
+						if (untilStart > 0) {
+							untilStart--;
+						} else if (untilStart == 0 && untilNext > 0) {
+							untilNext--;
+						} else if (untilStart == 0 && untilNext == 0) {
+							int maxHunger = AppleCoreAPI.accessor.getMaxHunger(event.player);
+							int missing = maxHunger - event.player.getFoodStats().getFoodLevel();
+							untilNext = HHTConfigCommon.mending.delayBetween;
+							if (HHTConfigCommon.mending.scaling.useScalingDelay) {
+								untilNext += HHTConfigCommon.mending.scaling.additionalDelayPerHungerMissing * missing;
 							}
-							else {
-								event.player.heal((float)(HHTConfigCommon.mending.staticAmount));
-							}
+							healPlayer(event.player, HHTConfigCommon.mending.usePercent, HHTConfigCommon.mending.percentAmount, HHTConfigCommon.mending.staticAmount);
 						}
+					} else {
+						untilStart = HHTConfigCommon.mending.delayUntilStart;
 					}
 				} else {
 					untilStart = HHTConfigCommon.mending.delayUntilStart;
+					kitRegen = false;
 				}
+
 				hRegenCap.setData(untilStart, untilNext);
+				hRegenCap.setKitRegen(kitRegen);
+			}
+		}
+	}
+
+	private void healPlayer(EntityPlayer player, boolean usePercent, double percentAmount, double staticAmount) {
+		if (!player.world.isRemote && player.getHealth() < player.getMaxHealth()) {
+			if (usePercent) {
+				player.heal((float)(percentAmount * player.getMaxHealth()));
+			}
+			else {
+				player.heal((float)(staticAmount));
 			}
 		}
 	}
@@ -135,6 +158,7 @@ public class HealthHungerHandler {
 					untilNext += HHTConfigCommon.mending.scaling.additionalDelayPerHungerMissing * missing;
 				}
 				cap.setData(HHTConfigCommon.mending.delayUntilStart, untilNext);
+				cap.setKitRegen(false);
 			}
 
 		}

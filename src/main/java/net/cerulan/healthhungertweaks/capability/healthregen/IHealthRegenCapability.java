@@ -2,13 +2,15 @@ package net.cerulan.healthhungertweaks.capability.healthregen;
 
 public interface IHealthRegenCapability {
 	
-	public int getTicksUntilRegenStart();
-	public int getTicksUntilNextRegen();
+	int getTicksUntilRegenStart();
+	int getTicksUntilNextRegen();
+	boolean isKitRegen();
 	
-	public void setTicksUntilRegenStart(int ticks);
-	public void setTicksUntilNextRegen(int ticks);
+	void setTicksUntilRegenStart(int ticks);
+	void setTicksUntilNextRegen(int ticks);
+	void setKitRegen(boolean value);
 	
-	public void setData(int ticksStart, int ticksNext);
+	void setData(int ticksStart, int ticksNext);
 	
 	
 

@@ -16,6 +16,8 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
+import javax.annotation.Nonnull;
+
 public class MessageUseHealthKit implements IMessage {
 	
 	public static class MessageUseHealthKitHandler implements IMessageHandler<MessageUseHealthKit, IMessage>{
@@ -42,6 +44,8 @@ public class MessageUseHealthKit implements IMessage {
 					pl.heal(healAmount);*/
 					IHealthRegenCapability regen = pl.getCapability(HealthRegenCapabilityHandler.HEALTH_REGEN, null);
 					regen.setTicksUntilRegenStart(0);
+					regen.setTicksUntilNextRegen(HHTConfigCommon.mending.delayBetween);
+					regen.setKitRegen(true);
 					ITextComponent text = new TextComponentString(new TextComponentTranslation("healthkit.useHealthKit").getFormattedText()
 							.replace("${item}", new TextComponentTranslation(String.format("item.health_kit_regen.name")).getFormattedText()));
 					text.getStyle().setColor(TextFormatting.AQUA);

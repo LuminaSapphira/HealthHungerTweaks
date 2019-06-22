@@ -9,6 +9,7 @@ import net.minecraftforge.common.capabilities.Capability.IStorage;
 public class HealthRegenCapability implements IHealthRegenCapability {
 
 	private int untilRegenStart, untilNextRegen;
+	private boolean isKitRegen;
 
 	@Override
 	public int getTicksUntilRegenStart() {
@@ -21,6 +22,9 @@ public class HealthRegenCapability implements IHealthRegenCapability {
 	}
 
 	@Override
+	public boolean isKitRegen() { return isKitRegen; }
+
+	@Override
 	public void setTicksUntilRegenStart(int ticks) {
 		this.untilRegenStart = ticks;
 	}
@@ -29,6 +33,9 @@ public class HealthRegenCapability implements IHealthRegenCapability {
 	public void setTicksUntilNextRegen(int ticks) {
 		this.untilNextRegen = ticks;
 	}
+
+	@Override
+	public void setKitRegen(boolean val) { this.isKitRegen = val; }
 
 	@Override
 	public void setData(int ticksStart, int ticksNext) {
@@ -44,6 +51,7 @@ public class HealthRegenCapability implements IHealthRegenCapability {
 			NBTTagCompound compound = new NBTTagCompound();
 			compound.setInteger("ticksUntilStart", instance.getTicksUntilRegenStart());
 			compound.setInteger("ticksUntilRegen", instance.getTicksUntilNextRegen());
+			compound.setBoolean("kitRegen", instance.isKitRegen());
 			return compound;
 		}
 
@@ -53,6 +61,7 @@ public class HealthRegenCapability implements IHealthRegenCapability {
 
 			NBTTagCompound compound = (NBTTagCompound) nbt;
 			instance.setData(compound.getInteger("ticksUntilStart"), compound.getInteger("ticksUntilRegen"));
+			instance.setKitRegen(compound.getBoolean("kitRegen"));
 
 		}
 
