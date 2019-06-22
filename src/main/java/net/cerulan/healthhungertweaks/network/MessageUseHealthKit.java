@@ -16,8 +16,6 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
-import javax.annotation.Nonnull;
-
 public class MessageUseHealthKit implements IMessage {
 	
 	public static class MessageUseHealthKitHandler implements IMessageHandler<MessageUseHealthKit, IMessage>{
